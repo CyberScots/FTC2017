@@ -52,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  *
  * Rag Rag Nicco is a Rag
  *
- * Charlie can't run
+ * Charlie can't run, but he is awesome
  */
 
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
