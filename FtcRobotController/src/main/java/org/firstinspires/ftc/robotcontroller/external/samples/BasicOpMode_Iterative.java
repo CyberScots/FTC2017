@@ -53,6 +53,8 @@ import com.qualcomm.robotcore.util.Range;
  * Rag Rag Nicco is a Rag
  *
  * Zorb is awesome
+ *
+ * they both suck
  */
 
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
