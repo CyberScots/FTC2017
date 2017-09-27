@@ -54,14 +54,12 @@ import com.qualcomm.robotcore.hardware.SwitchableLight;
 @TeleOp(name = "Sensor: Color", group = "Sensor")
 @Disabled
 public class SensorColor extends LinearOpMode {
-
   /** The colorSensor field will contain a reference to our color sensor hardware object */
   NormalizedColorSensor colorSensor;
   /** The relativeLayout field is used to aid in providing interesting visual feedback
    * in this sample application; you probably *don't* need something analogous when you
    * use a color sensor on your robot */
   View relativeLayout;
-
   /**
    * The runOpMode() method is the root of this LinearOpMode, as it is in all linear opModes.
    * Our implementation here, though is a bit unusual: we've decided to put all the actual work
