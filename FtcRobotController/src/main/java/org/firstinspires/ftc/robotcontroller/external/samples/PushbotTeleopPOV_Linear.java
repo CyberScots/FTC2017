@@ -66,6 +66,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
         double turn;
         double max;
 
+
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
