@@ -48,7 +48,9 @@ import com.qualcomm.robotcore.util.Range;
  *
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- * Nicco Push to Github Test
+ * Rag Push to Github Test
+ *
+ *
  *
  * Rag Rag Nicco is a Rag
  *
@@ -70,7 +72,7 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
-
+        telemetry.addData("NiccoStatus", "Rag");
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
