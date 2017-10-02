@@ -8,9 +8,10 @@ public class test {
     telemetry.addData("NiccoStatus", "Rag");
 }
 
-/*
+/**
 testing Nicco's Computer upload
 Sucsessful
 testing Nicco's computer pull
 Successful
+it worked
  */
