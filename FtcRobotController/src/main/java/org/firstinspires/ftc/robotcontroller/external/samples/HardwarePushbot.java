@@ -102,4 +102,3 @@ public class HardwarePushbot
         rightClaw.setPosition(MID_SERVO);
     }
  }
-/**Nicco is a rag
