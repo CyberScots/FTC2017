@@ -59,11 +59,10 @@ public class ConceptScanServo extends LinearOpMode {
     static final double MIN_POS     =  0.0;     // Minimum rotational position
 
     // Define class members
-    Servo   servo;
     public DcMotor leftDrive   = null;
-    double  position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
-    double  motorPower = 0;
-    boolean rampUp = true;
+    public DcMotor rightDrive   = null;
+    double  motorPowerL = 0;
+    double motorPowerR = 0;
 
 
     @Override
@@ -71,8 +70,8 @@ public class ConceptScanServo extends LinearOpMode {
 
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
-        servo = hardwareMap.get(Servo.class, "left_hand");
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
         // Wait for the start button
         telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
@@ -82,16 +81,16 @@ public class ConceptScanServo extends LinearOpMode {
         // Scan servo till stop pressed.
         while(opModeIsActive()){
 
-            position = (gamepad1.right_stick_y + 1) / 2;
-            motorPower = gamepad1.left_stick_y;
+            motorPowerL = gamepad1.left_stick_y;
+            motorPowerR = gamepad1.right_stick_y;
             // Display the current value
-            telemetry.addData("Servo Position", "%5.2f", position);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
             // Set the servo to the new position and pause;
-            servo.setPosition(position);
-            leftDrive.setPower(motorPower);
+
+            leftDrive.setPower(motorPowerL);
+            rightDrive.setPower(motorPowerR);
             sleep(CYCLE_MS);
             idle();
         }
