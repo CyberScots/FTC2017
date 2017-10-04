@@ -32,6 +32,7 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -59,7 +60,9 @@ public class ConceptScanServo extends LinearOpMode {
 
     // Define class members
     Servo   servo;
+    public DcMotor leftDrive   = null;
     double  position = (MAX_POS - MIN_POS) / 2; // Start at halfway position
+    double  motorPower = 0;
     boolean rampUp = true;
 
 
@@ -69,7 +72,7 @@ public class ConceptScanServo extends LinearOpMode {
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
         servo = hardwareMap.get(Servo.class, "left_hand");
-
+        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         // Wait for the start button
         telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
@@ -80,7 +83,7 @@ public class ConceptScanServo extends LinearOpMode {
         while(opModeIsActive()){
 
             position = (gamepad1.right_stick_y + 1) / 2;
-
+            motorPower = gamepad1.left_stick_y;
             // Display the current value
             telemetry.addData("Servo Position", "%5.2f", position);
             telemetry.addData(">", "Press Stop to end test." );
@@ -88,6 +91,7 @@ public class ConceptScanServo extends LinearOpMode {
 
             // Set the servo to the new position and pause;
             servo.setPosition(position);
+            leftDrive.setPower(motorPower);
             sleep(CYCLE_MS);
             idle();
         }
