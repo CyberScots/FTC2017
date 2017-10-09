@@ -88,7 +88,7 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 3 seconds
+        // Step 1:  Drive forward for 2 mats
         robot.leftDrive.setPower(FORWARD_SPEED);
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
@@ -106,9 +106,9 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
             telemetry.update();
         }
 
-        // Step 3:  Drive Backwards for 3 Seconds
-        robot.leftDrive.setPower(-FORWARD_SPEED);
-        robot.rightDrive.setPower(-FORWARD_SPEED);
+        // Step 3:  Drive for 2 mats
+        robot.leftDrive.setPower(FORWARD_SPEED);
+        robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
             telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
