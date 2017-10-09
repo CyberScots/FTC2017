@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
+@Autonomous(name="Zorbot: Passjack Autonomous", group="Pushbot")
 @Disabled
 public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
@@ -81,7 +81,7 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Ready to run");    //
+        telemetry.addData("Status", "Passjack");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
