@@ -67,7 +67,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
 
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 1;
-    static final double     MAT_TIME      = 2;
+    static final double     MAT_TIME      = 1;
     static final double     TURN_TIME      = 0.5;
 
     @Override
