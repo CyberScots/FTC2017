@@ -120,4 +120,4 @@ Note: Some names start with "Team" and others start with "team".  This is intent
     
 6)  Open up Android Studios and clean out any old files by using the menu to "Build/Clean Project""
 
-7)  Find Zorb and tell him he is a rag
+7)  Find Nicco and tell him he is a rag

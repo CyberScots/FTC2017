@@ -57,9 +57,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Zorbot: Passjack Autonomous", group="Pushbot")
+@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
 @Disabled
-public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
+public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
@@ -68,8 +68,6 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
-    static final double     MAT_TIME      = 3;
-    static final double     TURN_TIME      = 0.5;
 
     @Override
     public void runOpMode() {
@@ -81,7 +79,7 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Passjack");    //
+        telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -89,32 +87,33 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 2 mats
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
+        // Step 1:  Drive forward for 3 seconds
+        robot.leftDrive.setPower(1);
+        robot.rightDrive.setPower(1);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        // Step 2:  Spin right 180
-        robot.leftDrive.setPower(TURN_SPEED);
-        robot.rightDrive.setPower(-TURN_SPEED);
+        // Step 2:  Spin right for 1.3 seconds
+        robot.leftDrive.setPower(.3);
+        robot.rightDrive.setPower(-.3);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < TURN_TIME*2)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        // Step 3:  Drive for 2 mats
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
+        // Step 3:  Drive Backwards for 1 Second
+        robot.leftDrive.setPower(-1);
+        robot.rightDrive.setPower(-1);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
             telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+
 
         // Step 4:  Stop and close the claw.
         robot.leftDrive.setPower(0);
@@ -124,6 +123,8 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
-        sleep(1000);
+        telemetry.addData("Nico=", "rag");
+        telemetry.update();
+        sleep(2000);
     }
 }
