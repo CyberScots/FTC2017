@@ -69,6 +69,7 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
     static final double     MAT_TIME      = 3;
+    static final double     TURN_TIME      = 0.5;
 
     @Override
     public void runOpMode() {
@@ -97,11 +98,11 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
             telemetry.update();
         }
 
-        // Step 2:  Spin right for 1.3 seconds
+        // Step 2:  Spin right 180
         robot.leftDrive.setPower(TURN_SPEED);
         robot.rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+        while (opModeIsActive() && (runtime.seconds() < TURN_TIME*2)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
