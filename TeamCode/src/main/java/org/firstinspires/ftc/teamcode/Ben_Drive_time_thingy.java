@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -53,21 +52,23 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  *  The code is written in a simple form with no optimizations.
  *  However, there are several ways that this type of sequence could be streamlined,
  *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
+@Autonomous(name="duh duh duh", group="Pushbot")
 //@Disabled
-public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
+public class Ben_Drive_time_thingy extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
+    static final double     FORWARD_SPEED = 1;
+    static final double     TURN_SPEED    = 1;
+    static final double     MAT_TIME      = 2;
+    static final double     TURN_TIME      = 0.5;
 
     @Override
     public void runOpMode() {
@@ -79,7 +80,7 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Ready to run");    //
+        telemetry.addData("Status", "Nicco_rag");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -87,33 +88,32 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        // Step 1:  Drive forward for 3 seconds
-        robot.leftDrive.setPower(1);
-        robot.rightDrive.setPower(1);
+        // Step 1:  Drive forward for 2 mats
+        robot.leftDrive.setPower(FORWARD_SPEED);
+        robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
+            telemetry.addData("Path", "Leg(Nicco_rag) 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        // Step 2:  Spin right for 1.3 seconds
-        robot.leftDrive.setPower(.3);
-        robot.rightDrive.setPower(-.3);
+        // Step 2:  Spin right 180
+        robot.leftDrive.setPower(TURN_SPEED);
+        robot.rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < TURN_TIME*2)) {
+            telemetry.addData("Path", "Leg(Nicco_rag) 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
-        // Step 3:  Drive Backwards for 1 Second
-        robot.leftDrive.setPower(-1);
-        robot.rightDrive.setPower(-1);
+        // Step 3:  Drive for 2 mats
+        robot.leftDrive.setPower(FORWARD_SPEED);
+        robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
-            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
+            telemetry.addData("Path", "Leg(Nicco_rag) 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
 
         // Step 4:  Stop and close the claw.
         robot.leftDrive.setPower(0);
@@ -121,10 +121,8 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
         robot.leftClaw.setPosition(1.0);
         robot.rightClaw.setPosition(0.0);
 
-        telemetry.addData("Path", "Complete");
+        telemetry.addData("Path", "Total Nicco RAg");
         telemetry.update();
-        telemetry.addData("Nico=", "rag");
-        telemetry.update();
-        sleep(2000);
+        sleep(7000);
     }
 }
