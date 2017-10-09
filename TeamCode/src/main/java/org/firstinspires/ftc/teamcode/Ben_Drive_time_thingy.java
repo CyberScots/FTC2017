@@ -80,7 +80,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "nico_rag");    //
+        telemetry.addData("Status", "Nicco_rag");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
@@ -93,7 +93,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
-            telemetry.addData("Path", "Leg(nico_rag) 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.addData("Path", "Leg(Nicco_rag) 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
@@ -102,7 +102,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
         robot.rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < TURN_TIME*2)) {
-            telemetry.addData("Path", "Leg(nico_rag) 2: %2.5f S Elapsed", runtime.seconds());
+            telemetry.addData("Path", "Leg(Nicco_rag) 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
@@ -111,7 +111,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 2*MAT_TIME)) {
-            telemetry.addData("Path", "Leg(nico_rag) 3: %2.5f S Elapsed", runtime.seconds());
+            telemetry.addData("Path", "Leg(Nicco_rag) 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
@@ -121,7 +121,7 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
         robot.leftClaw.setPosition(1.0);
         robot.rightClaw.setPosition(0.0);
 
-        telemetry.addData("Path", "Total Nico RAg");
+        telemetry.addData("Path", "Total Nicco RAg");
         telemetry.update();
         sleep(7000);
     }
