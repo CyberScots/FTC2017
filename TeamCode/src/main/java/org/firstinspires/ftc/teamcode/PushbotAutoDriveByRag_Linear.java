@@ -79,7 +79,7 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Ready to run");    //
+        telemetry.addData("Status", "Ready to rag");    //
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
