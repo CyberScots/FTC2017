@@ -53,12 +53,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  *  The code is written in a simple form with no optimizations.
  *  However, there are several ways that this type of sequence could be streamlined,
  *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
 @Autonomous(name="Zorbot: Passjack Autonomous", group="Pushbot")
-@Disabled
+//@Disabled
 public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
