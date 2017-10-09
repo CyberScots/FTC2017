@@ -91,7 +91,7 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
         robot.leftDrive.setPower(1);
         robot.rightDrive.setPower(1);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -109,7 +109,7 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
         robot.leftDrive.setPower(-1);
         robot.rightDrive.setPower(-1);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
             telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -125,6 +125,6 @@ public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
         telemetry.update();
         telemetry.addData("Nico=", "rag");
         telemetry.update();
-        sleep(1000);
+        sleep(2000);
     }
 }
