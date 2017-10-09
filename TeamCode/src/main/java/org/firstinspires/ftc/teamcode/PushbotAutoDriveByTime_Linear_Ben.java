@@ -57,8 +57,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-@Disabled
+@Autonomous(name="Pushbot:ragness of nicco", group="Pushbot")
+//@Disabled
 public class PushbotAutoDriveByTime_Linear_Ben extends LinearOpMode {
 
     /* Declare OpMode members. */
