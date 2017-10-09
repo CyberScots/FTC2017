@@ -72,6 +72,8 @@ public class ConceptScanServo extends LinearOpMode {
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
+        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         // Wait for the start button
         telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
@@ -83,6 +85,12 @@ public class ConceptScanServo extends LinearOpMode {
 
             motorPowerL = gamepad1.left_stick_y;
             motorPowerR = gamepad1.right_stick_y;
+            if (Math.abs(motorPowerL) < 0.05) {
+                motorPowerL = 0;
+            }
+            if (Math.abs(motorPowerR) < 0.05) {
+                motorPowerR = 0;
+            }
             // Display the current value
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
