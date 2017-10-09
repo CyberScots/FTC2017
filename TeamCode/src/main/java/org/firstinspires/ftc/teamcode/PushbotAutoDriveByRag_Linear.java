@@ -58,7 +58,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Rag", group="Pushbot")
-@Disabled
+// @Disabled
 public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
