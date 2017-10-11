@@ -75,7 +75,7 @@ public class ConceptScanServo extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         // Wait for the start button
-        telemetry.addData(">", "Press Start to drive." );
+        telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
         waitForStart();
 
