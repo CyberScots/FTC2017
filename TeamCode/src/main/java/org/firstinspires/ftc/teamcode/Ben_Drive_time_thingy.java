@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="duh duh duh", group="Pushbot")
+@Autonomous(name="Ben_Drive_time_thingy", group="Pushbot")
 //@Disabled
 public class Ben_Drive_time_thingy extends LinearOpMode {
 
@@ -65,10 +65,10 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = .75;
-    static final double     TURN_SPEED    = .75;
-    static final double     MAT_TIME      = .5;
-    static final double     TURN_TIME      = 1.1;
+    static final double     FORWARD_SPEED = .1;
+    static final double     TURN_SPEED    = .1;
+    static final double     MAT_TIME      = 1;
+    static final double     TURN_TIME      = 1;
 
     @Override
     public void runOpMode() {
