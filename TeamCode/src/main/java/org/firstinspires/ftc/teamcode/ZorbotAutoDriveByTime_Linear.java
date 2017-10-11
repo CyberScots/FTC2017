@@ -67,9 +67,9 @@ public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
 
     static final double     FORWARD_SPEED = 1;
-    static final double     TURN_SPEED    = 0.5;
+    static final double     TURN_SPEED    = 1;
     static final double     MAT_TIME      = 1.3;
-    static final double     TURN_TIME      = 1;
+    static final double     TURN_TIME      = 0.85;
 
     @Override
     public void runOpMode() {
