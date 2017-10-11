@@ -91,7 +91,7 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         robot.leftDrive.setPower(FORWARD_SPEED);
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 4.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 3.5)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
