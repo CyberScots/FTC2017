@@ -49,7 +49,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name = "Concept: Scan Servo", group = "Concept")
+@Autonomous(name = "TankDrive", group = "Concept")
 @Disabled
 public class ConceptScanServo extends LinearOpMode {
 
@@ -75,7 +75,7 @@ public class ConceptScanServo extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         // Wait for the start button
-        telemetry.addData(">", "Press Start to move Servo." );
+        telemetry.addData(">", "Press Start to activate robot." );
         telemetry.update();
         waitForStart();
 
