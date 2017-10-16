@@ -77,7 +77,7 @@ public class ConceptScanServo extends LinearOpMode {
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
-        arm  = hardwareMap.get(DcMotor.class, "arm");
+        arm  = hardwareMap.get(DcMotor.class, "left_arm");
         leftHand  = hardwareMap.get(Servo.class, "left_hand");
         rightHand  = hardwareMap.get(Servo.class, "right_hand");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
@@ -102,10 +102,11 @@ public class ConceptScanServo extends LinearOpMode {
                 motorPowerR = 0;
             }
             if (gamepad1.y) {
-                arm.setPower(0.1);
-            }
-            if (gamepad1.a) {
-                arm.setPower(-0.1);
+                arm.setPower(0.5);
+            }else if (gamepad1.a) {
+                arm.setPower(-0.5);
+            }else {
+                arm.setPower(0);
             }
 
             CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
