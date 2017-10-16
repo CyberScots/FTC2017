@@ -65,8 +65,8 @@ public class Ben_Drive_time_thingy extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = .1;
-    static final double     TURN_SPEED    = .1;
+    static final double     FORWARD_SPEED = 1;
+    static final double     TURN_SPEED    = 1;
     static final double     MAT_TIME      = 1;
     static final double     TURN_TIME      = 1;
 

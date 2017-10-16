@@ -66,8 +66,8 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
+    static final double     FORWARD_SPEED = 0.4;
+    static final double     TURN_SPEED    = 0.48;
 
     @Override
     public void runOpMode() {
