@@ -132,7 +132,7 @@ public class PushbotTeleopPOV_Linear extends LinearOpMode {
             telemetry.update();
 
             // Pace this loop so jaw action is reasonable speed.
-            sleep(50);
+            sleep(5000);
         }
     }
 }
