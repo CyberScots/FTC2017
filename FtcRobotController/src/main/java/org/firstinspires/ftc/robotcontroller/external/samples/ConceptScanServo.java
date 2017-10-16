@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This OpMode scans a single servo back and forwards until Stop is pressed.
@@ -57,10 +58,14 @@ public class ConceptScanServo extends LinearOpMode {
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
+    double CLAW_POS = 0;
 
     // Define class members
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive   = null;
+    public DcMotor arm   = null;
+    public Servo leftHand = null;
+    public Servo rightHand = null;
     double  motorPowerL = 0;
     double motorPowerR = 0;
 
@@ -72,15 +77,20 @@ public class ConceptScanServo extends LinearOpMode {
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
+        arm  = hardwareMap.get(DcMotor.class, "left_arm");
+        leftHand  = hardwareMap.get(Servo.class, "left_hand");
+        rightHand  = hardwareMap.get(Servo.class, "right_hand");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        arm.setDirection(DcMotor.Direction.FORWARD);
+        leftHand.setPosition(0.5);
+        rightHand.setPosition(0.5);
         // Wait for the start button
         telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
         waitForStart();
 
 
-        // Scan servo till stop pressed.
         while(opModeIsActive()){
 
             motorPowerL = gamepad1.left_stick_y;
@@ -91,6 +101,19 @@ public class ConceptScanServo extends LinearOpMode {
             if (Math.abs(motorPowerR) < 0.05) {
                 motorPowerR = 0;
             }
+            if (gamepad1.y) {
+                arm.setPower(0.5);
+            }else if (gamepad1.a) {
+                arm.setPower(-0.5);
+            }else {
+                arm.setPower(0);
+            }
+
+            CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
+            CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
+            leftHand.setPosition(0.5 + CLAW_POS);
+            rightHand.setPosition(0.5 - CLAW_POS);
+
             // Display the current value
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();

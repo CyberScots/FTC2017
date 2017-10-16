@@ -26,12 +26,12 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
@@ -65,9 +65,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Concept: VuMark Id", group ="Concept")
+@Autonomous(name="Passjack: VuMark Id", group ="Concept")
 //@Disabled
-public class ConceptVuMarkIdentification extends LinearOpMode {
+public class ZorbVuMarkIdentification extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
 
@@ -103,7 +103,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code onthe next line, between the double quotes.
          */
-        parameters.vuforiaLicenseKey = "ATsODcD/////AAAAAVw2lR...d45oGpdljdOh5LuFB9nDNfckoxb8COxKSFX";
+        parameters.vuforiaLicenseKey = "AcRNMjL/////AAAAGYx9swjI4EM3gOz2yIkuui5Eo0LMsIsAxmD+X+Lz2Eox41tmaut+zNhNGm68NGyXSnmYIwcWSIVz/fOZf+ht++8XJScyjQv/BDbKKOOEZ3//KzhxFkS93SlQ3OKX+KhDdtv/USecJsSYAMY/A77pOHu10H6SXHGC2fTuCa1+mzp6rEpugFFC0JxcTJSyFTx3IMvH4BPU98zZbTbb8bnVl1usz84xusFUTKGua19+lvZ1gBwfe/SltwgQZEmzTrQPT7K8cnu0obpmxspet8k5FHbqeJvzXV9PMK1wd2+wYygYQMeJCOrg/ZIE/fRODW4sgDIt6L85XMehoidJ3aE2csreAsiSaQsFgnYe4H07XwDi";
 
         /*
          * We also indicate which camera on the RC that we wish to use.
