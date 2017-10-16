@@ -63,6 +63,7 @@ public class ConceptScanServo extends LinearOpMode {
     // Define class members
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive   = null;
+    public DcMotor arm   = null;
     public Servo leftHand = null;
     public Servo rightHand = null;
     double  motorPowerL = 0;
@@ -76,10 +77,12 @@ public class ConceptScanServo extends LinearOpMode {
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
+        arm  = hardwareMap.get(DcMotor.class, "arm");
         leftHand  = hardwareMap.get(Servo.class, "left_hand");
         rightHand  = hardwareMap.get(Servo.class, "right_hand");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        arm.setDirection(DcMotor.Direction.FORWARD);
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
         // Wait for the start button
@@ -98,10 +101,15 @@ public class ConceptScanServo extends LinearOpMode {
             if (Math.abs(motorPowerR) < 0.05) {
                 motorPowerR = 0;
             }
+            if (gamepad1.y) {
+                arm.setPower(0.1);
+            }
+            if (gamepad1.a) {
+                arm.setPower(-0.1);
+            }
 
-
-            CLAW_POS += gamepad1.right_trigger - gamepad1.left_trigger;
-            CLAW_POS = Range.clip(CLAW_POS, -0.5, 0.5);
+            CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
+            CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
             leftHand.setPosition(0.5 + CLAW_POS);
             rightHand.setPosition(0.5 - CLAW_POS);
 
