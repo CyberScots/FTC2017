@@ -38,8 +38,6 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.*;
-
 /**
  * This class demonstrates how to manually register opmodes.
  *
@@ -108,7 +106,7 @@ public class ConceptRegisterOpModes
       // manager.register("DIM as Indicator",       ConceptDIMAsIndicator.class);
       // manager.register("I2C Address Change",     ConceptI2cAddressChange.class);
       // manager.register("Ramp Motor Speed",       ConceptRampMotorSpeed.class);
-      manager.register("Scan Servo",             ConceptScanServo.class);
+      manager.register("Scan Servo",             TankDrive.class);
       // manager.register("Telemetry",              ConceptTelemetry.class);
       // manager.register("Vuforia Navigation",     ConceptVuforiaNavigation.class);
     }
