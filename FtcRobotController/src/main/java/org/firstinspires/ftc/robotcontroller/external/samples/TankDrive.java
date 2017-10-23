@@ -50,9 +50,9 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Autonomous(name = "TankDrive", group = "Concept")
+@Autonomous(name = "Tank Drive", group = "Cyber Scots")
 @Disabled
-public class ConceptScanServo extends LinearOpMode {
+public class TankDrive extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
@@ -86,7 +86,7 @@ public class ConceptScanServo extends LinearOpMode {
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
         // Wait for the start button
-        telemetry.addData(">", "Press Start to activate robot." );
+        telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
         waitForStart();
 
