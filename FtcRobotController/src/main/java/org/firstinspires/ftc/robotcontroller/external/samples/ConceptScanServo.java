@@ -70,7 +70,7 @@ public class ConceptScanServo extends LinearOpMode {
     double motorPowerR = 0;
 
 
-    @Override
+    //@Override
     public void runOpMode() {
 
         // Connect to servo (Assume PushBot Left Hand)

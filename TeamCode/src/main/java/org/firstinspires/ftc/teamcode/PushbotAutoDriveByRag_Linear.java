@@ -86,12 +86,22 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         waitForStart();
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
+        //point the arm up to make moving easy.
+        robot.leftArm.setPower(-.25);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            telemetry.addData("Path", "Moving arm", runtime.seconds());
+            telemetry.update();
+        }
+        robot.leftArm.setPower(0);
 
-        // Step 1:  Drive forward for 4 seconds
+
+
+        //drive forward
         robot.leftDrive.setPower(FORWARD_SPEED);
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.5)) {
+        while (opModeIsActive() && (runtime.seconds() < 2.625)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -100,20 +110,29 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         robot.leftDrive.setPower(TURN_SPEED);
         robot.rightDrive.setPower(-TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
-        // Step 3:  Drive Forward for 4 seconds
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setPower(0);
+        // Step 3:  Drive Forward for .5 seconds
         robot.leftDrive.setPower(FORWARD_SPEED);
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 4.0)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.5)) {
             telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
 
+        //lower the arm
+        robot.leftArm.setPower(.5);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .5)) {
+            telemetry.addData("Path", "Moving arm", runtime.seconds());
+            telemetry.update();
+        }
+        robot.leftArm.setPower(0);
         // Step 4:  Stop
         robot.leftDrive.setPower(0);
         robot.rightDrive.setPower(0);
