@@ -66,8 +66,8 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     FORWARD_SPEED = 0.4;
-    static final double     TURN_SPEED    = 0.48;
+    static final double     FORWARD_SPEED = -0.4;
+    static final double     TURN_SPEED    = -0.48;
 
     @Override
     public void runOpMode() {
@@ -84,12 +84,13 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
+        robot.leftClaw.setPosition(.5);
+        robot.rightClaw.setPosition(.5);
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
         //point the arm up to make moving easy.
-        robot.leftArm.setPower(-.25);
+        robot.leftArm.setPower(.25);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Path", "Moving arm", runtime.seconds());
             telemetry.update();
         }
@@ -107,28 +108,28 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         }
 
         // Step 2:  Spin right for 2 seconds
-        robot.leftDrive.setPower(TURN_SPEED);
-        robot.rightDrive.setPower(-TURN_SPEED);
+        robot.leftDrive.setPower(-TURN_SPEED);
+        robot.rightDrive.setPower(TURN_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
+        while (opModeIsActive() && (runtime.seconds() < 1.1)) {
             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setPower(0);
+
         // Step 3:  Drive Forward for .5 seconds
         robot.leftDrive.setPower(FORWARD_SPEED);
         robot.rightDrive.setPower(FORWARD_SPEED);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.5)) {
+        while (opModeIsActive() && (runtime.seconds() < .5)) {
             telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setPower(0);
         //lower the arm
-        robot.leftArm.setPower(.5);
+        robot.leftArm.setPower(-.5);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .5)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             telemetry.addData("Path", "Moving arm", runtime.seconds());
             telemetry.update();
         }
@@ -137,6 +138,8 @@ public class PushbotAutoDriveByRag_Linear extends LinearOpMode {
         robot.leftDrive.setPower(0);
         robot.rightDrive.setPower(0);
 
+        robot.leftClaw.setPosition(.5);
+        robot.rightClaw.setPosition(.5);
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
