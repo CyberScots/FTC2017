@@ -108,12 +108,15 @@ public class BEN_PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.leftClaw.setPosition(0.0);            // S4: Stop and close the claw.
-        robot.rightClaw.setPosition(1.0);
+        robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
+        robot.rightClaw.setPosition(0.0);
         robot.leftArm.setPower(.5);
         while (opModeIsActive() && (runtime.seconds() < 1)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
+
+        }
+        robot.leftArm.setPower(0);
             // Step through each leg of the path,
             // Note: Reverse movement is obtained by setting a negative distance (not speed)
             encoderDrive(TURN_SPEED, 12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
@@ -124,7 +127,7 @@ public class BEN_PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
             telemetry.addData("Path", "Complete");
             telemetry.update();
-        }
+
 
     }
 
