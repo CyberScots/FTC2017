@@ -126,7 +126,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.leftDrive.setPower(0);
          robot.rightDrive.setPower(0);
          //lower the arm
-         robot.leftArm.setPower(-.5);
+         robot.leftArm.setPower(-.25);
          runtime.reset();
          while (opModeIsActive() && (runtime.seconds() < 2)) {
              telemetry.addData("Path", "Moving arm", runtime.seconds());
