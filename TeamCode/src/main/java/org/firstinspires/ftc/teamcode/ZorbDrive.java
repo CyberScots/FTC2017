@@ -60,9 +60,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "JackTank", group = "Cyber Scots")
+@TeleOp(name = "ZorbDrive", group = "Cyber Scots")
 //@Disabled
-public class JackTank extends LinearOpMode {
+public class ZorbDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
@@ -102,23 +102,24 @@ public class JackTank extends LinearOpMode {
 
         while(opModeIsActive()){
 
-            motorPowerL = gamepad1.left_stick_y; // original code
+            motorPowerL = gamepad1.right_stick_y; // original code
             motorPowerR = gamepad1.right_stick_y;
-            motorPowerR = gamepad1.right_trigger;
-            motorPowerL = gamepad1.left_trigger;
+
+            motorPowerL += gamepad1.right_stick_x*2;
+            motorPowerR -= gamepad1.right_stick_x*2;
+
+            motorPowerL = Range.clip(motorPowerL, -1, 1);
+            motorPowerR = Range.clip(motorPowerR, -1, 1);
+
             if (Math.abs(motorPowerL) < 0.05) {
                 motorPowerL = 0;
             }
             if (Math.abs(motorPowerR) < 0.05) {
                 motorPowerR = 0;
             }
-            if (gamepad1.y) {
-                arm.setPower(0.5);
-            }else if (gamepad1.a) {
-                arm.setPower(-0.5);
-            }else {
-                arm.setPower(0);
-            }
+
+                arm.setPower(gamepad1.left_stick_y);
+
 
             CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
             CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
@@ -126,7 +127,7 @@ public class JackTank extends LinearOpMode {
             rightHand.setPosition(0.5 - CLAW_POS);
 
             // Display the current value
-            telemetry.addData(">", "Press Stop to end test." );
+            telemetry.addData(">", "Press Stop to end Zorb's Drive." );
             telemetry.update();
 
             // Set the servo to the new position and pause;
