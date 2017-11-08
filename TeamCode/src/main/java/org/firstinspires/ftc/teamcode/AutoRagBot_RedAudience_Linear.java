@@ -70,7 +70,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
      @Override
      public void runOpMode() {
-
+         //Setup
          /*
           * Initialize the drive system variables.
           * The init() method of the hardware class does all the work here
@@ -85,18 +85,15 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          waitForStart();
          robot.leftClaw.setPosition(.5);
          robot.rightClaw.setPosition(.5);
-         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-         //point the arm up to make moving easy.
+         //point the arm up to make moving easy
          runtime.reset();
+         robot.leftArm.setPower(0.1);
          while (opModeIsActive() && (runtime.seconds() < 2)) {
              telemetry.addData("Path", "Moving arm", runtime.seconds());
              telemetry.update();
          }
          robot.leftArm.setPower(0);
-
-
-
-         //drive forward
+         // Step 1: Drive forward
          robot.leftDrive.setPower(FORWARD_SPEED);
          robot.rightDrive.setPower(FORWARD_SPEED);
          runtime.reset();
@@ -104,8 +101,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
              telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
-
          // Step 2:  Spin right for 2 seconds
+
          robot.leftDrive.setPower(-TURN_SPEED);
          robot.rightDrive.setPower(TURN_SPEED);
          runtime.reset();
@@ -113,12 +110,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
              telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
+         // Step 3:  Drive Backwards for .5 seconds
 
-         // Step 3:  Drive Forward for .5 seconds
-         robot.leftDrive.setPower(FORWARD_SPEED);
-         robot.rightDrive.setPower(FORWARD_SPEED);
+         robot.leftDrive.setPower(-FORWARD_SPEED);
+         robot.rightDrive.setPower(-FORWARD_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < .5)) {
+         while (opModeIsActive() && (runtime.seconds() < .25)) {
              telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
