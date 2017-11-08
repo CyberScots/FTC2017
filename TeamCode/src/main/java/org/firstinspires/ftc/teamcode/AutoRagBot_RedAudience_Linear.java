@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   */
 //setup the code
  @Autonomous(name="Pushbot: Auto Rag bot Red audience", group="Pushbot")
- // 9*/9--+@Disabled
+ //@Disabled
  public class AutoRagBot_RedAudience_Linear extends LinearOpMode {
 
      /* Declare OpMode members. */
