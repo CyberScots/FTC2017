@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 
- @Autonomous(name="REALY BAD CODE BY NICCO", group="Pushbot")
+ @Autonomous(name="REALLY BAD CODE BY NICCO", group="Pushbot")
  // 9*/9--+@Disabled
  public class AutoRagbot_RedFar_Linear extends LinearOpMode {
 
