@@ -105,8 +105,8 @@ public class ZorbDrive extends LinearOpMode {
             motorPowerL = gamepad1.right_stick_y; // original code
             motorPowerR = gamepad1.right_stick_y;
 
-            motorPowerL += gamepad1.right_stick_x*2;
-            motorPowerR -= gamepad1.right_stick_x*2;
+            motorPowerL -= gamepad1.right_stick_x*2;
+            motorPowerR += gamepad1.right_stick_x*2;
 
             motorPowerL = Range.clip(motorPowerL, -1, 1);
             motorPowerR = Range.clip(motorPowerR, -1, 1);
