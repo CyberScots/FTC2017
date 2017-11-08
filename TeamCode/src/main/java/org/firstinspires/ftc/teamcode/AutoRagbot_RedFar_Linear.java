@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 
- @Autonomous(name="Pushbot: Auto Drive By Rag", group="Pushbot")
+ @Autonomous(name="Ragbot: Auto Drive Red Far", group="Pushbot")
  // 9*/9--+@Disabled
  public class AutoRagbot_RedFar_Linear extends LinearOpMode {
 
@@ -78,7 +78,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.init(hardwareMap);
 
          // Send telemetry message to signify robot waiting;
-         telemetry.addData("Status", "Hacking your phone");    //
+         telemetry.addData("Status", "Ragbot is ready");    //
          telemetry.update();
 
          // Wait for the game to start (driver presses PLAY)
@@ -101,16 +101,16 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.leftDrive.setPower(FORWARD_SPEED);
          robot.rightDrive.setPower(FORWARD_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 2.625)) {
+         while (opModeIsActive() && (runtime.seconds() < .65625)) {
              telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
 
-         // Step 2:  Spin right for 2 seconds
+         // Step 2:  Spin right for 2.2 seconds
          robot.leftDrive.setPower(-TURN_SPEED);
          robot.rightDrive.setPower(TURN_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 1.1)) {
+         while (opModeIsActive() && (runtime.seconds() < 2.2)) {
              telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }

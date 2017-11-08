@@ -68,7 +68,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //@Disabled
 public class BEN_PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
-    /* Declare OpMode members. */≈≈
+    /* Declare OpMode members. */
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
