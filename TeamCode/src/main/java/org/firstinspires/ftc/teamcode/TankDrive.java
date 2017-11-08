@@ -62,7 +62,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 @TeleOp(name = "JackTank", group = "Cyber Scots")
 //@Disabled
-public class JackTank extends LinearOpMode {
+public class TankDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
