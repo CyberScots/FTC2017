@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 //setup the code
- @Autonomous(name="Pushbot: Auto Drive By Rag", group="Pushbot")
+ @Autonomous(name="Pushbot: Auto Rag bot Red audience", group="Pushbot")
  // 9*/9--+@Disabled
  public class AutoRagBot_RedAudience_Linear extends LinearOpMode {
 
@@ -70,7 +70,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
      @Override
      public void runOpMode() {
-         //Setup
+         //Setup robot
          /*
           * Initialize the drive system variables.
           * The init() method of the hardware class does all the work here
@@ -83,8 +83,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
          // Wait for the game to start (driver presses PLAY)
          waitForStart();
-         robot.leftClaw.setPosition(.5);
-         robot.rightClaw.setPosition(.5);
+         robot.leftClaw.setPosition(.4);
+         robot.rightClaw.setPosition(.4);
          //point the arm up to make moving easy
          runtime.reset();
          robot.leftArm.setPower(0.1);
