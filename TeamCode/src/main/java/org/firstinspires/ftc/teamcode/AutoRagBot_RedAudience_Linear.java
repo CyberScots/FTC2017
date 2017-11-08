@@ -65,8 +65,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
      private ElapsedTime     runtime = new ElapsedTime();
 
 
-     static final double     FORWARD_SPEED = -0.4;
-     static final double     TURN_SPEED    = -0.48;
+     static final double     FORWARD_SPEED = -0.45;
+     static final double     TURN_SPEED    = -0.28;
 
      @Override
      public void runOpMode() {
@@ -83,8 +83,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
          // Wait for the game to start (driver presses PLAY)
          waitForStart();
-         robot.leftClaw.setPosition(.4);
-         robot.rightClaw.setPosition(.4);
+         robot.leftClaw.setPosition(.3);
+         robot.rightClaw.setPosition(.3);
          //point the arm up to make moving easy
          runtime.reset();
          robot.leftArm.setPower(0.1);
