@@ -101,7 +101,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.leftDrive.setPower(FORWARD_SPEED);
          robot.rightDrive.setPower(FORWARD_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < .65625)) {
+         while (opModeIsActive() && (runtime.seconds() < 1.5)) {
              telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
