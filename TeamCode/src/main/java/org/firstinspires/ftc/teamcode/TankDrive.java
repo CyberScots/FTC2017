@@ -60,7 +60,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "JackTank", group = "Cyber Scots")
+@TeleOp(name = "TankDrive", group = "Cyber Scots")
 //@Disabled
 public class TankDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
