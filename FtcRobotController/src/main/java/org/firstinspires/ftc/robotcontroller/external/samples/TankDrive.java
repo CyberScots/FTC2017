@@ -55,7 +55,7 @@ import com.qualcomm.robotcore.util.Range;
 public class TankDrive extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   25;     // period of each cycle
+    static final int    CYCLE_MS    =   5;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
     double CLAW_POS = 0;
