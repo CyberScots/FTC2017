@@ -83,8 +83,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
          // Wait for the game to start (driver presses PLAY)
          waitForStart();
-         robot.leftClaw.setPosition(.3);
-         robot.rightClaw.setPosition(.3);
+         robot.leftClaw.setPosition(.5);
+         robot.rightClaw.setPosition(.5);
          //point the arm up to make moving easy
          runtime.reset();
          robot.leftArm.setPower(0.1);
@@ -132,5 +132,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          telemetry.addData("Path", "Complete");
          telemetry.update();
          sleep(1000);
+         runtime.reset();
+         robot.leftArm.setPower(-0.1);
+         while (opModeIsActive() && (runtime.seconds() < 2)) {
+             telemetry.addData("Path", "Moving arm", runtime.seconds());
+             telemetry.update();
+         }
+         robot.leftArm.setPower(0);
      }
  }
