@@ -14,6 +14,9 @@ public class JackDrive extends LinearOpMode {
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
+
+    public static final boolean mode1 = false;
+    public static final boolean mode2 = true;
     double CLAW_POS = 0;
     TouchSensor lefttouch;
     TouchSensor righttouch;
@@ -44,9 +47,11 @@ public class JackDrive extends LinearOpMode {
         arm.setDirection(DcMotor.Direction.FORWARD);
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
+        boolean mode = mode1;
         // Wait for the start button
         telemetry.addData(">", "Press Start to move Servo." );
         telemetry.update();
+
         waitForStart();
 
 
@@ -56,40 +61,42 @@ public class JackDrive extends LinearOpMode {
             motorPowerL = gamepad1.left_trigger;
             motorPowerR = gamepad1.right_trigger;
             motorarm = gamepad1.right_stick_y;
-
-            if (Math.abs(motorPowerL) < 0.05) {
+            if (gamepad1.x) {mode = mode1;}
+            if (gamepad1.b) {mode = mode2;}
+            if (mode==mode1) {if (Math.abs(motorPowerL) < 0.05) {
                 motorPowerL = 0;
             }
-            if (Math.abs(motorPowerR) < 0.05) {
-                motorPowerR = 0;
-            }
-            if (gamepad1.right_stick_y > 0.05) {
-                arm.setPower(0);
-            }else {
-                arm.setPower(motorarm);
+                if (Math.abs(motorPowerR) < 0.05) {
+                    motorPowerR = 0;
+                }
+                if (gamepad1.right_stick_y > 0.05) {
+                    arm.setPower(0);
+                }else {
+                    arm.setPower(motorarm);
+                }
+
+                if (!lefttouch.isPressed()&& !righttouch.isPressed()) {
+                    CLAW_POS += (gamepad1.left_stick_x)/4;
+                    CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
+                    leftHand.setPosition(0 + CLAW_POS);
+                    rightHand.setPosition(0 - CLAW_POS);
+                };
+
+                // Display the current value
+                telemetry.addData(">", "Press Stop to end test." );
+                telemetry.update();
+
+                // Set the servo to the new position and pause;
+
+                leftDrive.setPower(motorPowerL);
+                rightDrive.setPower(motorPowerR);
+                sleep(CYCLE_MS);
+                idle();
             }
 
-            if (!lefttouch.isPressed()&& !righttouch.isPressed()) {
-                CLAW_POS += (gamepad1.left_stick_x)/4;
-                CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
-                leftHand.setPosition(0 + CLAW_POS);
-                rightHand.setPosition(0 - CLAW_POS);
-            };
-
-            // Display the current value
-            telemetry.addData(">", "Press Stop to end test." );
+            // Signal done;
+            telemetry.addData(">", "Done");
             telemetry.update();
-
-            // Set the servo to the new position and pause;
-
-            leftDrive.setPower(motorPowerL);
-            rightDrive.setPower(motorPowerR);
-            sleep(CYCLE_MS);
-            idle();
         }
+    }};
 
-        // Signal done;
-        telemetry.addData(">", "Done");
-        telemetry.update();
-    }
-}
