@@ -92,11 +92,50 @@ public class JackDrive extends LinearOpMode {
                 rightDrive.setPower(motorPowerR);
                 sleep(CYCLE_MS);
                 idle();
+                // Signal done;
+                telemetry.addData(">", "Done");
+                telemetry.update();
             }
 
-            // Signal done;
-            telemetry.addData(">", "Done");
-            telemetry.update();
-        }
-    }};
 
+        }
+            if (mode==mode2) {
+                motorPowerL = gamepad1.left_stick_y; // original code
+                motorPowerR = gamepad1.right_stick_y;
+
+                if (Math.abs(motorPowerL) < 0.05) {
+                    motorPowerL = 0;
+                }
+                if (Math.abs(motorPowerR) < 0.05) {
+                    motorPowerR = 0;
+                }
+                if (gamepad1.y) {
+                    arm.setPower(0.5);
+                }else if (gamepad1.a) {
+                    arm.setPower(-0.5);
+                }else {
+                    arm.setPower(0);
+                }
+
+                CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
+                CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
+                leftHand.setPosition(0.5 + CLAW_POS);
+                rightHand.setPosition(0.5 - CLAW_POS);
+
+                // Display the current value
+                telemetry.addData(">", "Press Stop to end test." );
+                telemetry.update();
+
+                // Set the servo to the new position and pause;
+
+                leftDrive.setPower(motorPowerL);
+                rightDrive.setPower(motorPowerR);
+                sleep(CYCLE_MS);
+                idle();
+            }
+
+        // Signal done;
+        telemetry.addData(">", "Done");
+        telemetry.update();
+    }
+}
