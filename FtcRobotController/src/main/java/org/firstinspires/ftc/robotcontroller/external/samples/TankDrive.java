@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Autonomous(name = "Tank Drive", group = "Cyber Scots")
-@Disabled
+//@Disabled
 public class TankDrive extends LinearOpMode {
 
     static final double INCREMENT   = 0.01;     // amount to slew servo each CYCLE_MS cycle
@@ -81,7 +81,7 @@ public class TankDrive extends LinearOpMode {
         leftHand  = hardwareMap.get(Servo.class, "left_hand");
         rightHand  = hardwareMap.get(Servo.class, "right_hand");
         leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+       rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         arm.setDirection(DcMotor.Direction.FORWARD);
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
