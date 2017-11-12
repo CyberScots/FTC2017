@@ -60,7 +60,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "ZorbDrive", group = "Cyber Scots")
+@TeleOp(name = "RagBot ZorbDrive", group = "Cyber Scots")
 //@Disabled
 public class ZorbDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
@@ -68,7 +68,6 @@ public class ZorbDrive extends LinearOpMode {
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
     double CLAW_POS = 0;
-    ColorSensor colorSensor;
     // Define class members
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive   = null;
@@ -125,17 +124,12 @@ public class ZorbDrive extends LinearOpMode {
         // Wait for the start button
 
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
-        telemetry.addData(">", "      ___           ___           ___           ___           ___           ___     " );
-        telemetry.addData(">", "    /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\    " );
-        telemetry.addData(">", "    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\        \\:\\  \\   " );
-        telemetry.addData(">", "   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\  " );
-        telemetry.addData(">", "  /::\\~\\:\\  \\   /::\\~\\:\\  \\   /:/  \\:\\  \\   /::\\~\\:\\__\\   /:/  \\:\\  \\       /::\\  \\" );
-        telemetry.addData(">", " /:/\\:\\ \\:\\__\\ /:/\\:\\ \\:\\__\\ /:/__/_\\:\\__\\ /:/\\:\\ \\:|__| /:/__/ \\:\\__\\     /:/\\:\\__\\" );
-        telemetry.addData(">", " \\/_|::\\/:/  / \\/__\\:\\/:/  / \\:\\  /\\ \\/__/ \\:\\~\\:\\/:/  / \\:\\  \\ /:/  /    /:/  \\/__/" );
-        telemetry.addData(">", "    |:|::/  /       \\::/  /   \\:\\ \\:\\__\\    \\:\\ \\::/  /   \\:\\  /:/  /    /:/  /     " );
-        telemetry.addData(">", "    |:|\\/__/        /:/  /     \\:\\/:/  /     \\:\\/:/  /     \\:\\/:/  /     \\/__/      " );
-        telemetry.addData(">", "    |:|  |         /:/  /       \\::/  /       \\::/__/       \\::/  /                 " );
-        telemetry.addData(">", "     \\|__|         \\/__/         \\/__/         ~~            \\/__/                  " );
+        telemetry.addData(">", "    ____              __          __ " );
+        telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
+        telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
+        telemetry.addData(">", " / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
+        telemetry.addData(">", "/_/ |_|\\__,_/\\__, /_.___/\\____/\\__/  " );
+        telemetry.addData(">", "            /____/                   " );
         telemetry.update();
         waitForStart();
 
