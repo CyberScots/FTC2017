@@ -125,7 +125,7 @@ public class ZorbDrive extends LinearOpMode {
         // Wait for the start button
 
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
-        telemetry.addData(">", "     ___           ___           ___           ___           ___           ___     " );
+        telemetry.addData(">", "      ___           ___           ___           ___           ___           ___     " );
         telemetry.addData(">", "    /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\         /\\  \\    " );
         telemetry.addData(">", "    /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\       /::\\  \\        \\:\\  \\   " );
         telemetry.addData(">", "   /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\     /:/\\:\\  \\        \\:\\  \\  " );
