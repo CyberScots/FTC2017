@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 //setup the code
- @Autonomous(name="Ben's Bad Code", group="Pushbot")
+ @Autonomous(name="Auto Rag Bot Red Audience Linear", group="Pushbot")
  //@Disabled
  public class AutoRagBot_RedAudience_Linear extends LinearOpMode {
 
@@ -83,8 +83,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
          // Wait for the game to start (driver presses PLAY)
          waitForStart();
-         robot.leftClaw.setPosition(.3);
-         robot.rightClaw.setPosition(.3);
+         robot.leftClaw.setPosition(.5);
+         robot.rightClaw.setPosition(.5);
          //point the arm up to make moving easy
          runtime.reset();
          robot.leftArm.setPower(0.1);
@@ -106,7 +106,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.leftDrive.setPower(-TURN_SPEED);
          robot.rightDrive.setPower(TURN_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 2.2)) {
+         while (opModeIsActive() && (runtime.seconds() < 1.5)) {
              telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
@@ -132,5 +132,12 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          telemetry.addData("Path", "Complete");
          telemetry.update();
          sleep(1000);
+         runtime.reset();
+         robot.leftArm.setPower(-0.1);
+         while (opModeIsActive() && (runtime.seconds() < 2)) {
+             telemetry.addData("Path", "Moving arm", runtime.seconds());
+             telemetry.update();
+         }
+         robot.leftArm.setPower(0);
      }
  }

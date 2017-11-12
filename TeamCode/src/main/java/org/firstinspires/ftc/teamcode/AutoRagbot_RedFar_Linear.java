@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 
- @Autonomous(name="Ragbot: Auto Drive Red Far", group="Pushbot")
+ @Autonomous(name="Auto Ragbot Red Far Linear", group="Pushbot")
  // 9*/9--+@Disabled
  public class AutoRagbot_RedFar_Linear extends LinearOpMode {
 
@@ -101,7 +101,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          robot.leftDrive.setPower(FORWARD_SPEED);
          robot.rightDrive.setPower(FORWARD_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < .65625)) {
+         while (opModeIsActive() && (runtime.seconds() < 1.5)) {
              telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
