@@ -29,22 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
-
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This OpMode scans a single servo back and forwards until Stop is pressed.
@@ -60,9 +49,9 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "RagBot ZorbDrive", group = "Cyber Scots")
+@TeleOp(name = "Rag Bot: Tele OP by rag", group = "Cyber Scots")
 //@Disabled
-public class ZorbDrive extends LinearOpMode {
+public class RagDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
@@ -122,7 +111,7 @@ public class ZorbDrive extends LinearOpMode {
         rightHand.setPosition(0.5);
         // Wait for the start button
 
-        telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
+        telemetry.addData(">", "Press Start to use Nicco's drive for the Ragbot" );
         telemetry.addData(">", "    ____              __          __ " );
         telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
         telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
@@ -135,11 +124,11 @@ public class ZorbDrive extends LinearOpMode {
 
         while(opModeIsActive()){
 
-            motorPowerL = gamepad1.right_stick_y;
-            motorPowerR = gamepad1.right_stick_y;
+            motorPowerL = gamepad1.left_trigger;
+            motorPowerR = gamepad1.left_trigger;
 
-            motorPowerL -= gamepad1.right_stick_x*2;
-            motorPowerR += gamepad1.right_stick_x*2;
+            motorPowerL -= gamepad1.left_trigger*2;
+            motorPowerR += gamepad1.left_trigger*2;
 
             motorPowerL = Range.clip(motorPowerL, -1, 1);
             motorPowerR = Range.clip(motorPowerR, -1, 1);
@@ -154,13 +143,13 @@ public class ZorbDrive extends LinearOpMode {
                 arm.setPower(gamepad1.left_stick_y);
 
 
-            CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
+            CLAW_POS += (gamepad1.right_stick_x - gamepad1.right_stick_y)/4;
             CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
             leftHand.setPosition(0.5 + CLAW_POS);
             rightHand.setPosition(0.5 - CLAW_POS);
 
             // Display the current value
-            telemetry.addData(">", "Press Stop to end Zorb's Drive." );
+            telemetry.addData(">", "Press Stop to end Nicco's Drive." );
             telemetry.update();
 
             // Set the servo to the new position and pause;
