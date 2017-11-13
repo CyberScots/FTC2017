@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 @TeleOp(name = "JackDrive", group = "Cyber Scots")
-//@Disabled
+@Disabled
 public class JackDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle

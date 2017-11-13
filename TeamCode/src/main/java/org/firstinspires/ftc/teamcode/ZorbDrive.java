@@ -40,11 +40,10 @@ import com.qualcomm.robotcore.util.Range;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
-
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+//import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.ColorSensor;
+//import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * This OpMode scans a single servo back and forwards until Stop is pressed.
@@ -107,7 +106,6 @@ public class ZorbDrive extends LinearOpMode {
 
 
         */
-         */
 
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
@@ -119,12 +117,13 @@ public class ZorbDrive extends LinearOpMode {
         leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         arm.setDirection(DcMotor.Direction.FORWARD);
+        arm.setPower(0);
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
         // Wait for the start button
 
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
-        telemetry.addData(">", "    ____              __          __ " );
+        telemetry.addData(">", "    ____               __          __ " );
         telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
         telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
         telemetry.addData(">", " / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
@@ -152,7 +151,7 @@ public class ZorbDrive extends LinearOpMode {
                 motorPowerR = 0;
             }
 
-                arm.setPower(gamepad1.left_stick_y);
+            arm.setPower(gamepad1.left_stick_y);
 
 
             CLAW_POS += (gamepad1.right_trigger - gamepad1.left_trigger)/4;
