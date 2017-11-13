@@ -56,7 +56,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
   */
 //setup the code
- @Autonomous(name="Auto Rag Bot Red Audience Linear", group="Pushbot")
+ @Autonomous(name="Auto Rag Bot Red;+:Audience", group="Pushbot")
  //@Disabled
  public class AutoRagBot_RedAudience_Linear extends LinearOpMode {
 
@@ -65,10 +65,10 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
      private ElapsedTime     runtime = new ElapsedTime();
 
 
-     static final double     FORWARD_SPEED = -0.45;
-     static final double     TURN_SPEED    = -0.28;
+     static final double     FORWARD_SPEED = 0.45;
+     static final double     TURN_SPEED    = -.18;
 
-     @Override
+     //@Override
      public void runOpMode() {
          //Setup robot
          /*
@@ -83,11 +83,11 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
          // Wait for the game to start (driver presses PLAY)
          waitForStart();
-         robot.leftClaw.setPosition(.5);
-         robot.rightClaw.setPosition(.5);
+        // robot.leftClaw.setPosition(.7);
+       //  robot.rightClaw.setPosition(-.7);
          //point the arm up to make moving easy
          runtime.reset();
-         robot.leftArm.setPower(0.1);
+        // robot.leftArm.setPower(0.3);
          while (opModeIsActive() && (runtime.seconds() < 2)) {
              telemetry.addData("Path", "Moving arm", runtime.seconds());
              telemetry.update();
@@ -103,19 +103,19 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          }
          // Step 2:  Spin right for 2 seconds
 
-         robot.leftDrive.setPower(-TURN_SPEED);
-         robot.rightDrive.setPower(TURN_SPEED);
-         runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 1.5)) {
-             telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-             telemetry.update();
-         }
-         // Step 3:  Drive Backwards for .5 seconds
+       //  robot.leftDrive.setPower(-TURN_SPEED);
+        // robot.rightDrive.setPower(TURN_SPEED);
+        // runtime.reset();
+        // while (opModeIsActive() && (runtime.seconds() < 2.2)) {
+        //     telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+        //     telemetry.update();
+       //  }
+         // Step 3:  Drive forward for .5 seconds
 
-         robot.leftDrive.setPower(-FORWARD_SPEED);
-         robot.rightDrive.setPower(-FORWARD_SPEED);
+         robot.leftDrive.setPower(FORWARD_SPEED);
+         robot.rightDrive.setPower(FORWARD_SPEED);
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < .25)) {
+         while (opModeIsActive() && (runtime.seconds() < .24)) {
              telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
              telemetry.update();
          }
@@ -126,18 +126,16 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
          // Step 4:  Stop
          robot.leftDrive.setPower(0);
          robot.rightDrive.setPower(0);
-
-         robot.leftClaw.setPosition(.5);
-         robot.rightClaw.setPosition(.5);
-         telemetry.addData("Path", "Complete");
-         telemetry.update();
-         sleep(1000);
          runtime.reset();
-         robot.leftArm.setPower(-0.1);
+         //robot.leftArm.setPower(0.3);
          while (opModeIsActive() && (runtime.seconds() < 2)) {
              telemetry.addData("Path", "Moving arm", runtime.seconds());
              telemetry.update();
          }
-         robot.leftArm.setPower(0);
+        // robot.leftClaw.setPosition(.5);
+        // robot.rightClaw.setPosition(.5);
+         telemetry.addData("Path", "Complete");
+         telemetry.update();
+         sleep(1000);
      }
  }
