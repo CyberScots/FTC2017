@@ -65,10 +65,10 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Pushbot: passjack Auto Drive By Encoder", group="Pushbot")
-//@Disabled
+@Disabled
 public class BEN_PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
-    /* Declare OpMode members. */
+    /* Declare OpMode members. */≈≈
     HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
@@ -80,7 +80,7 @@ public class BEN_PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
 
-    //@Override
+    @Override
     public void runOpMode() {
 
         /*
