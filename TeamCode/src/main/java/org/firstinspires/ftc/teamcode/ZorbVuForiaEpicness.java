@@ -65,7 +65,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Passjack: VuMark Id", group ="Concept")
+@Autonomous(name="Zorb VuMark", group ="Concept")
 //@Disabled
 public class ZorbVuForiaEpicness extends LinearOpMode {
 

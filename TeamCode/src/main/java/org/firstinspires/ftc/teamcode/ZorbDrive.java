@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import android.app.Activity;
@@ -75,7 +76,9 @@ public class ZorbDrive extends LinearOpMode {
     public Servo rightHand = null;
     double  motorPowerL = 0;
     double motorPowerR = 0;
-
+    static final double     FORWARD_SPEED = 1;
+    static final double     TURN_SPEED    = 0.5;
+    private ElapsedTime runtime = new ElapsedTime();
 
     //@Override
     public void runOpMode() {
@@ -138,8 +141,8 @@ public class ZorbDrive extends LinearOpMode {
             motorPowerL = gamepad1.right_stick_y;
             motorPowerR = gamepad1.right_stick_y;
 
-            motorPowerL -= gamepad1.right_stick_x*2;
-            motorPowerR += gamepad1.right_stick_x*2;
+            motorPowerL -= gamepad1.right_stick_x*TURN_SPEED;
+            motorPowerR += gamepad1.right_stick_x*TURN_SPEED;
 
             motorPowerL = Range.clip(motorPowerL, -1, 1);
             motorPowerR = Range.clip(motorPowerR, -1, 1);
@@ -160,13 +163,61 @@ public class ZorbDrive extends LinearOpMode {
             rightHand.setPosition(0.5 - CLAW_POS);
 
             // Display the current value
-            telemetry.addData(">", "Press Stop to end Zorb's Drive." );
+            telemetry.addData(">", "Press Stop to end Zorb's epic drive." );
             telemetry.update();
 
             // Set the servo to the new position and pause;
 
             leftDrive.setPower(motorPowerL);
             rightDrive.setPower(motorPowerR);
+
+            if (gamepad1.x) {
+                arm.setPower(0);
+                //drive forward
+                leftDrive.setPower(FORWARD_SPEED);
+                rightDrive.setPower(FORWARD_SPEED);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < 2.625)) {
+                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+
+                // Step 2:  Spin right for 2 seconds
+                leftDrive.setPower(-TURN_SPEED);
+                rightDrive.setPower(TURN_SPEED);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < 1.1)) {
+                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+
+                // Step 3:  Drive Forward for .5 seconds
+                leftDrive.setPower(FORWARD_SPEED);
+                rightDrive.setPower(FORWARD_SPEED);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < .5)) {
+                    telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
+                    telemetry.update();
+                }
+                leftDrive.setPower(0);
+                rightDrive.setPower(0);
+                //lower the arm
+                arm.setPower(-.5);
+                runtime.reset();
+                while (opModeIsActive() && (runtime.seconds() < 2)) {
+                    telemetry.addData("Path", "Moving arm", runtime.seconds());
+                    telemetry.update();
+                }
+                arm.setPower(0);
+                // Step 4:  Stop
+                leftDrive.setPower(0);
+                rightDrive.setPower(0);
+                telemetry.addData("Path", "Complete");
+                telemetry.update();
+            }
+
+
+
             sleep(CYCLE_MS);
             idle();
         }
