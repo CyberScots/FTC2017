@@ -66,37 +66,11 @@ public class RagDrive extends LinearOpMode {
     double  motorPowerL = 0;
     double motorPowerR = 0;
 
+// MADE MOSTLY BY ZORB
+
 
     //@Override
     public void runOpMode() {
-
-        /*
-
-          _____                    _____                    _____                    _____                   _______               _____
-         /\    \                  /\    \                  /\    \                  /\    \                 /::\    \             /\    \
-        /::\    \                /::\    \                /::\    \                /::\    \               /::::\    \           /::\    \
-       /::::\    \              /::::\    \              /::::\    \              /::::\    \             /::::::\    \          \:::\    \
-      /::::::\    \            /::::::\    \            /::::::\    \            /::::::\    \           /::::::::\    \          \:::\    \
-     /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \          /:::/\:::\    \         /:::/~~\:::\    \          \:::\    \
-    /:::/__\:::\    \        /:::/__\:::\    \        /:::/  \:::\    \        /:::/__\:::\    \       /:::/    \:::\    \          \:::\    \
-   /::::\   \:::\    \      /::::\   \:::\    \      /:::/    \:::\    \      /::::\   \:::\    \     /:::/    / \:::\    \         /::::\    \
-  /::::::\   \:::\    \    /::::::\   \:::\    \    /:::/    / \:::\    \    /::::::\   \:::\    \   /:::/____/   \:::\____\       /::::::\    \
- /:::/\:::\   \:::\____\  /:::/\:::\   \:::\    \  /:::/    /   \:::\ ___\  /:::/\:::\   \:::\ ___\ |:::|    |     |:::|    |     /:::/\:::\    \
-/:::/  \:::\   \:::|    |/:::/  \:::\   \:::\____\/:::/____/  ___\:::|    |/:::/__\:::\   \:::|    ||:::|____|     |:::|    |    /:::/  \:::\____\
-\::/   |::::\  /:::|____|\::/    \:::\  /:::/    /\:::\    \ /\  /:::|____|\:::\   \:::\  /:::|____| \:::\    \   /:::/    /    /:::/    \::/    /
- \/____|:::::\/:::/    /  \/____/ \:::\/:::/    /  \:::\    /::\ \::/    /  \:::\   \:::\/:::/    /   \:::\    \ /:::/    /    /:::/    / \/____/
-       |:::::::::/    /            \::::::/    /    \:::\   \:::\ \/____/    \:::\   \::::::/    /     \:::\    /:::/    /    /:::/    /
-       |::|\::::/    /              \::::/    /      \:::\   \:::\____\       \:::\   \::::/    /       \:::\__/:::/    /    /:::/    /
-       |::| \::/____/               /:::/    /        \:::\  /:::/    /        \:::\  /:::/    /         \::::::::/    /     \::/    /
-       |::|  ~|                    /:::/    /          \:::\/:::/    /          \:::\/:::/    /           \::::::/    /       \/____/
-       |::|   |                   /:::/    /            \::::::/    /            \::::::/    /             \::::/    /
-       \::|   |                  /:::/    /              \::::/    /              \::::/    /               \::/____/
-        \:|   |                  \::/    /                \::/____/                \::/____/                 ~~
-         \|___|                   \/____/                                           ~~
-
-
-        */
-
         // Connect to servo (Assume PushBot Left Hand)
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
@@ -111,7 +85,7 @@ public class RagDrive extends LinearOpMode {
         rightHand.setPosition(0.5);
         // Wait for the start button
 
-        telemetry.addData(">", "Press Start to use Nicco's drive for the Ragbot" );
+        telemetry.addData(">", "Press Start to use Zorb's code for Nicco's drive for the Ragbot" );
         telemetry.addData(">", "    ____              __          __ " );
         telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
         telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
@@ -124,11 +98,11 @@ public class RagDrive extends LinearOpMode {
 
         while(opModeIsActive()){
 
-            motorPowerL = gamepad1.left_trigger;
-            motorPowerR = gamepad1.left_trigger;
+            motorPowerL = gamepad1.left_trigger - gamepad1.right_trigger;
+            motorPowerR = gamepad1.left_trigger - gamepad1.right_trigger;
 
-            motorPowerL -= gamepad1.left_trigger*2;
-            motorPowerR += gamepad1.left_trigger*2;
+            motorPowerL += gamepad1.left_stick_x;
+            motorPowerR -= gamepad1.left_stick_x;
 
             motorPowerL = Range.clip(motorPowerL, -1, 1);
             motorPowerR = Range.clip(motorPowerR, -1, 1);
@@ -139,11 +113,17 @@ public class RagDrive extends LinearOpMode {
             if (Math.abs(motorPowerR) < 0.05) {
                 motorPowerR = 0;
             }
+            if (gamepad1.dpad_up) {
+                arm.setPower(0.4);
+            }else if(gamepad1.dpad_down) {
+                arm.setPower(-0.4);
+            }else {
+                arm.setPower(0);
+            }
 
-                arm.setPower(gamepad1.left_stick_y);
 
 
-            CLAW_POS += (gamepad1.right_stick_x - gamepad1.right_stick_y)/4;
+            CLAW_POS += (gamepad1.right_stick_x)/4;
             CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
             leftHand.setPosition(0.5 + CLAW_POS);
             rightHand.setPosition(0.5 - CLAW_POS);
