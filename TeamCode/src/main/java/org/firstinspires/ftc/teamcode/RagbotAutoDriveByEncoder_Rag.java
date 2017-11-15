@@ -65,7 +65,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Ragbot: Auto Drive By Encoder", group="Pushbot")
-//@Disabled
+@Disabled
 public class RagbotAutoDriveByEncoder_Rag extends LinearOpMode {
 
     /* Declare OpMode members. */

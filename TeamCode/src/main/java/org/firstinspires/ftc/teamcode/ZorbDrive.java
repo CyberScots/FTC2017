@@ -177,7 +177,7 @@ public class ZorbDrive extends LinearOpMode {
                 leftDrive.setPower(FORWARD_SPEED);
                 rightDrive.setPower(FORWARD_SPEED);
                 runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 2.625)) {
+                while (opModeIsActive() && (runtime.seconds() < .5)) {
                     telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
                     telemetry.update();
                 }
@@ -202,13 +202,6 @@ public class ZorbDrive extends LinearOpMode {
                 leftDrive.setPower(0);
                 rightDrive.setPower(0);
                 //lower the arm
-                arm.setPower(-.5);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 2)) {
-                    telemetry.addData("Path", "Moving arm", runtime.seconds());
-                    telemetry.update();
-                }
-                arm.setPower(0);
                 // Step 4:  Stop
                 leftDrive.setPower(0);
                 rightDrive.setPower(0);

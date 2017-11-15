@@ -32,7 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
  /**
@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
   */
 
  @Autonomous(name="Auto Ragbot Red Far Linear", group="Pushbot")
- // 9*/9--+@Disabled
+ @Disabled
  public class AutoRagbot_RedFar_Linear extends LinearOpMode {
 
      /* Declare OpMode members. */
@@ -68,7 +68,6 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
      static final double     FORWARD_SPEED = -0.4;
      static final double     TURN_SPEED    = -0.48;
 
-     @Override
      public void runOpMode() {
 
          /*

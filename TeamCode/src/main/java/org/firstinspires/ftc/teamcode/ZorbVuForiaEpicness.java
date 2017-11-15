@@ -45,6 +45,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -65,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Zorb VuMark", group ="Concept")
+@Autonomous(name="Zorb Epicness VuMark", group ="Concept")
 //@Disabled
 public class ZorbVuForiaEpicness extends LinearOpMode {
 

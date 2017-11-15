@@ -58,7 +58,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Passjack", group="Pushbot")
-//@Disabled
+@Disabled
 public class ZorbotAutoDriveByTime_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
