@@ -76,6 +76,8 @@ public class ZorbDrive extends LinearOpMode {
     public Servo rightHand = null;
     double  motorPowerL = 0;
     double motorPowerR = 0;
+    double joystickForward = 0;
+    double joystickTurn = 0;
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
@@ -123,7 +125,7 @@ public class ZorbDrive extends LinearOpMode {
         arm.setPower(0);
         leftHand.setPosition(0.5);
         rightHand.setPosition(0.5);
-        // Wait for the start button
+        // Wait for the start button0
 
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
         telemetry.addData(">", "    ____               __          __ " );
@@ -137,23 +139,26 @@ public class ZorbDrive extends LinearOpMode {
 
 
         while(opModeIsActive()){
+            joystickForward = gamepad1.right_stick_y;
+            joystickTurn = gamepad1.right_stick_x;
 
-            motorPowerL = Math.pow(gamepad1.right_stick_y, 3);
-            motorPowerR =  Math.pow(gamepad1.right_stick_y, 3);
+            if (Math.abs(joystickForward) < 0.01) {
+                joystickForward = 0;
+            }
+            if (Math.abs(joystickTurn) < 0.01) {
+                joystickTurn = 0;
+            }
+            motorPowerL = Math.pow(joystickForward, 3);
+            motorPowerR =  Math.pow(joystickForward, 3);
 
 
-            motorPowerL -= Math.pow(gamepad1.right_stick_x, 3)*TURN_SPEED;
-            motorPowerR += Math.pow(gamepad1.right_stick_x, 3)*TURN_SPEED;
+            motorPowerL -= Math.pow(joystickTurn, 3)*TURN_SPEED;
+            motorPowerR += Math.pow(joystickTurn, 3)*TURN_SPEED;
 
             motorPowerL = Range.clip(motorPowerL, -1, 1);
             motorPowerR = Range.clip(motorPowerR, -1, 1);
 
-            if (Math.abs(motorPowerL) < 0.05) {
-                motorPowerL = 0;
-            }
-            if (Math.abs(motorPowerR) < 0.05) {
-                motorPowerR = 0;
-            }
+
 
             arm.setPower(gamepad1.left_stick_y);
 
