@@ -160,7 +160,7 @@ public class ZorbDrive extends LinearOpMode {
 
 
 
-            arm.setPower(Math.pow(gamepad1.left_stick_y, 5));
+            arm.setPower(-Math.pow(gamepad1.left_stick_y, 5));
 
 
             CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger)/4,5);
