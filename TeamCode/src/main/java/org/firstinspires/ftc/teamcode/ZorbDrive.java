@@ -148,8 +148,8 @@ public class ZorbDrive extends LinearOpMode {
             if (Math.abs(joystickTurn) < 0.01) {
                 joystickTurn = 0;
             }
-            motorPowerL = Math.pow(joystickForward, 3);
-            motorPowerR =  Math.pow(joystickForward, 3);
+            motorPowerL = Math.pow(joystickForward, 5);
+            motorPowerR =  Math.pow(joystickForward, 5);
 
 
             motorPowerL -= Math.pow(joystickTurn, 3)*TURN_SPEED;
