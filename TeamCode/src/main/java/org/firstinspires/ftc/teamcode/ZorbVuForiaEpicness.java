@@ -46,6 +46,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -71,6 +74,25 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 public class ZorbVuForiaEpicness extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
+    static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
+    static final int    CYCLE_MS    =   25;     // period of each cycle
+    static final double MAX_POS     =  1.0;     // Maximum rotational position
+    static final double MIN_POS     =  0.0;     // Minimum rotational position
+    double CLAW_POS = 0;
+    // Define class members
+    public DcMotor leftDrive   = null;
+    public DcMotor rightDrive   = null;
+    public DcMotor lBelt   = null;
+    public DcMotor rBelt   = null;
+    public Servo leftClose   = null;
+    public Servo rightClose   = null;
+    double  motorPowerL = 0;
+    double motorPowerR = 0;
+    double joystickForward = 0;
+    double joystickTurn = 0;
+    static final double     FORWARD_SPEED = 1;
+    static final double     TURN_SPEED    = 0.5;
+    private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
@@ -102,6 +124,21 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
 
+        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
+        lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
+        rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
+        rightClose  = hardwareMap.get(Servo.class, "right_close");
+        leftClose  = hardwareMap.get(Servo.class, "left_close");
+        leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
+        lBelt.setDirection(DcMotor.Direction.FORWARD);
+        lBelt.setPower(0);
+        rBelt.setDirection(DcMotor.Direction.REVERSE);
+        rBelt.setPower(0);
+        leftClose.setPosition(0.5);
+        rightClose.setPosition(0.5);
+
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
         waitForStart();
@@ -114,12 +151,18 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 if (vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addData("VuMark Detected: ", "Left");
+                    leftDrive.setPower(0);
+                    rightDrive.setPower(1);
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
+                    leftDrive.setPower(1);
+                    rightDrive.setPower(1);
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
+                    leftDrive.setPower(1);
+                    rightDrive.setPower(0);
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -141,6 +184,8 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
             }
             else {
                 telemetry.addData("VuMark", "Not found ):");
+                leftDrive.setPower(0);
+                rightDrive.setPower(0);
             }
 
             telemetry.update();
