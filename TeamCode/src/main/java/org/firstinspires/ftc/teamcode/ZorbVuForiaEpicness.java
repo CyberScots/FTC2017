@@ -126,18 +126,18 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
 
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
-        lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
+        /*lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
-        leftClose  = hardwareMap.get(Servo.class, "left_close");
+        leftClose  = hardwareMap.get(Servo.class, "left_close");*/
         leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
-        lBelt.setDirection(DcMotor.Direction.FORWARD);
+        /*lBelt.setDirection(DcMotor.Direction.FORWARD);
         lBelt.setPower(0);
         rBelt.setDirection(DcMotor.Direction.REVERSE);
         rBelt.setPower(0);
         leftClose.setPosition(0.5);
-        rightClose.setPosition(0.5);
+        rightClose.setPosition(0.5);*/
 
         telemetry.addData(">", "Press Play to start");
         telemetry.update();
