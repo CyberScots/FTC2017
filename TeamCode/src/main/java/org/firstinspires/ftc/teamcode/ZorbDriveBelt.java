@@ -29,21 +29,14 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.view.View;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 //import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 //import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
@@ -60,9 +53,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "RagBot ZorbDrive", group = "Cyber Scots")
+@TeleOp(name = "RagBot BeltDrive", group = "Cyber Scots")
 //@Disabled
-public class ZorbDrive extends LinearOpMode {
+public class ZorbDriveBelt extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
@@ -71,9 +64,10 @@ public class ZorbDrive extends LinearOpMode {
     // Define class members
     public DcMotor leftDrive   = null;
     public DcMotor rightDrive   = null;
-    public DcMotor arm   = null;
-    public Servo leftHand = null;
-    public Servo rightHand = null;
+    public DcMotor lBelt   = null;
+    public DcMotor rBelt   = null;
+    public Servo leftClose   = null;
+    public Servo rightClose   = null;
     double  motorPowerL = 0;
     double motorPowerR = 0;
     double joystickForward = 0;
@@ -116,15 +110,18 @@ public class ZorbDrive extends LinearOpMode {
         // Change the text in quotes to match any servo name on your robot.
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
-        arm  = hardwareMap.get(DcMotor.class, "left_arm");
-        leftHand  = hardwareMap.get(Servo.class, "left_hand");
-        rightHand  = hardwareMap.get(Servo.class, "right_hand");
+        lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
+        rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
+        rightClose  = hardwareMap.get(Servo.class, "right_close");
+        leftClose  = hardwareMap.get(Servo.class, "left_close");
         leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
         rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
-        arm.setDirection(DcMotor.Direction.FORWARD);
-        arm.setPower(0);
-        leftHand.setPosition(0.5);
-        rightHand.setPosition(0.5);
+        lBelt.setDirection(DcMotor.Direction.FORWARD);
+        lBelt.setPower(0);
+        rBelt.setDirection(DcMotor.Direction.REVERSE);
+        rBelt.setPower(0);
+        leftClose.setPosition(0.5);
+        rightClose.setPosition(0.5);
         // Wait for the start button0
 
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
@@ -160,13 +157,14 @@ public class ZorbDrive extends LinearOpMode {
 
 
 
-            arm.setPower(-Math.pow(gamepad1.left_stick_y, 5));
+            lBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
+            rBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
 
 
             CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger),5);
             CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
-            leftHand.setPosition(0.5 + CLAW_POS);
-            rightHand.setPosition(0.5 - CLAW_POS);
+            leftClose.setPosition(0.5 + CLAW_POS);
+            rightClose.setPosition(0.5 - CLAW_POS);
 
             // Display the current value
             telemetry.addData(">", "Press Stop to end Zorb's epic drive." );
@@ -176,7 +174,7 @@ public class ZorbDrive extends LinearOpMode {
 
             leftDrive.setPower(motorPowerL);
             rightDrive.setPower(motorPowerR);
-
+/*
             if (gamepad1.x) {
                 arm.setPower(0);
                 //drive forward
@@ -216,7 +214,7 @@ public class ZorbDrive extends LinearOpMode {
             }
 
 
-
+*/
             sleep(CYCLE_MS);
             idle();
         }
