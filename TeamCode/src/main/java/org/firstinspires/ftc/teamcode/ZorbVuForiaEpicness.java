@@ -86,6 +86,7 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
+
     double  motorPowerL = 0;
     double motorPowerR = 0;
     double joystickForward = 0;
