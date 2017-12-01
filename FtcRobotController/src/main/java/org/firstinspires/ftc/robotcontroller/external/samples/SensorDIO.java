@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.LED;
 
 /*
  * This is an example LinearOpMode that shows how to use the digital inputs and outputs on the
@@ -64,19 +65,16 @@ final int RED_LED_CHANNEL = 1;
   public void runOpMode() {
 
     boolean               redOn;            // Output State
-    DigitalChannel        red;               // Device Object
+    LED red;               // Device Object
        boolean          greenOn;            // Output State
-      DigitalChannel      green;               // Device Object
+      LED      green;               // Device Object
       boolean             blueOn;            // Output State
-      DigitalChannel      blue;               // Device Object
+      LED      blue;               // Device Object
 
-    red = hardwareMap.get(DigitalChannel.class, "Red");    //  Use generic form of device mapping
-      green = hardwareMap.get(DigitalChannel.class, "Green");    //  Use generic form of device mapping
-      blue = hardwareMap.get(DigitalChannel.class, "Blue");    //  Use generic form of device mapping
+    red = hardwareMap.get(LED.class, "Red");    //  Use generic form of device mapping
+      green = hardwareMap.get(LED.class, "Green");    //  Use generic form of device mapping
+      blue = hardwareMap.get(LED.class, "Blue");    //  Use generic form of device mapping
 
-    red.setMode(DigitalChannel.Mode.OUTPUT);
-      green.setMode(DigitalChannel.Mode.OUTPUT);
-      blue.setMode(DigitalChannel.Mode.OUTPUT);
     // wait for the start button to be pressed.
     telemetry.addData(">", "Press play, and then user X button to set DigOut");
     telemetry.update();
@@ -85,11 +83,15 @@ final int RED_LED_CHANNEL = 1;
     while (opModeIsActive())  {
 
         redOn = gamepad1.b ;        //  Set the output pin based on x button
-        red.setState(redOn);
+        red.enable(true);
+
+        red.enableLight(true);
         greenOn = gamepad1.a ;        //  Set the output pin based on x button
-        red.setState(greenOn);
+        red.enable(greenOn);
         blueOn = gamepad1.x ;        //  Set the output pin based on x button
-        blue.setState(blueOn);
+        blue.enable(blueOn);
+
+        telemetry.addData("red on:", red.isLightOn());
         // Display input pin state on LEDs
         telemetry.update();
     }

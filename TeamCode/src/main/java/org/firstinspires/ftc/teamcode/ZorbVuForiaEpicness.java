@@ -49,6 +49,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -74,29 +75,65 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class ZorbVuForiaEpicness extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
-    static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
-    static final int    CYCLE_MS    =   25;     // period of each cycle
-    static final double MAX_POS     =  1.0;     // Maximum rotational position
-    static final double MIN_POS     =  0.0;     // Minimum rotational position
-    double CLAW_POS = 0;
-    // Define class members
-    public DcMotor leftDrive   = null;
-    public DcMotor rightDrive   = null;
+    public DcMotor leftFront   = null;
+    public DcMotor rightFront   = null;
+    public DcMotor leftBack   = null;
+    public DcMotor rightBack   = null;
     public DcMotor lBelt   = null;
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
-
-    double  motorPowerL = 0;
-    double motorPowerR = 0;
-    double joystickForward = 0;
-    double joystickTurn = 0;
+    double  motorFL = 0;
+    double motorFR = 0;
+    double  motorBL = 0;
+    double motorBR = 0;
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
+
+    public void move(double x, double y, double turn) {
+        motorFL = Math.pow(y, 5);
+        motorFR =  Math.pow(y, 5);
+        motorBL = Math.pow(y, 5);
+        motorBR =  Math.pow(y, 5);
+
+        x = Math.pow(x, 5);
+
+        if (x > 0 && y > 0) {
+            motorFR -= x;
+            motorBL -= x;
+        }
+        if (x > 0 && y < 0) {
+            motorFR += x;
+            motorBL += x;
+        }
+        if (x < 0 && y > 0) {
+            motorFL -= x;
+            motorBR -= x;
+        }
+        if (x < 0 && y < 0) {
+            motorFL += x;
+            motorBR += x;
+        }
+
+        motorFL -= Math.pow(turn, 5)*TURN_SPEED;
+        motorFR += Math.pow(turn, 5)*TURN_SPEED;
+        motorBL -= Math.pow(turn, 5)*TURN_SPEED;
+        motorBR += Math.pow(turn, 5)*TURN_SPEED;
+
+        motorFL = Range.clip(motorFL, -1, 1);
+        motorFR = Range.clip(motorFR, -1, 1);
+        motorBL = Range.clip(motorBL, -1, 1);
+        motorBR = Range.clip(motorBR, -1, 1);
+
+        leftFront.setPower(motorFL);
+        rightFront.setPower(motorFR);
+        leftBack.setPower(motorBL);
+        rightBack.setPower(motorBR);
+    }
 
     @Override public void runOpMode() {
 
@@ -124,24 +161,36 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
-
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive  = hardwareMap.get(DcMotor.class, "right_drive");
-        /*lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
+        leftFront  = hardwareMap.get(DcMotor.class, "left_front");
+        rightFront  = hardwareMap.get(DcMotor.class, "right_front");
+        leftBack  = hardwareMap.get(DcMotor.class, "left_back");
+        rightBack  = hardwareMap.get(DcMotor.class, "right_back");
+        lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
-        leftClose  = hardwareMap.get(Servo.class, "left_close");*/
-        leftDrive.setDirection(DcMotor.Direction.REVERSE); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
-        /*lBelt.setDirection(DcMotor.Direction.FORWARD);
+        leftClose  = hardwareMap.get(Servo.class, "left_close");
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
+        rightBack.setDirection(DcMotor.Direction.FORWARD);
+        lBelt.setDirection(DcMotor.Direction.FORWARD);
         lBelt.setPower(0);
         rBelt.setDirection(DcMotor.Direction.REVERSE);
         rBelt.setPower(0);
         leftClose.setPosition(0.5);
-        rightClose.setPosition(0.5);*/
+        rightClose.setPosition(0.5);
+        // Wait for the start button0
 
-        telemetry.addData(">", "Press Play to start");
+
+        telemetry.addData(">", "Press Start to use Zorb's awesome VuForia for the Ragbot" );
+        telemetry.addData(">", "    ____               __          __ " );
+        telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
+        telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
+        telemetry.addData(">", " / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
+        telemetry.addData(">", "/_/ |_|\\__,_/\\__, /_.___/\\____/\\__/  " );
+        telemetry.addData(">", "            /____/                   " );
         telemetry.update();
+
         waitForStart();
 
         relicTrackables.activate();
@@ -152,18 +201,15 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 if (vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addData("VuMark Detected: ", "Left");
-                    leftDrive.setPower(0);
-                    rightDrive.setPower(1);
+                    move(-1,0,0);
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
-                    leftDrive.setPower(1);
-                    rightDrive.setPower(1);
+                    move(0,1,0);
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
-                    leftDrive.setPower(1);
-                    rightDrive.setPower(0);
+                    move(1,0,0);
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -185,8 +231,7 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
             }
             else {
                 telemetry.addData("VuMark", "Not found ):");
-                leftDrive.setPower(0);
-                rightDrive.setPower(0);
+                move(0,0,0);
             }
 
             telemetry.update();

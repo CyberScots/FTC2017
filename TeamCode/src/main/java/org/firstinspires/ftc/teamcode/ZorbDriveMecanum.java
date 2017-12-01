@@ -81,6 +81,49 @@ public class ZorbDriveMecanum extends LinearOpMode {
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
+
+    public void move(double x, double y, double turn) {
+        motorFL = Math.pow(y, 5);
+        motorFR =  Math.pow(y, 5);
+        motorBL = Math.pow(y, 5);
+        motorBR =  Math.pow(y, 5);
+
+        x = Math.pow(x, 5);
+
+        if (x > 0 && y > 0) {
+            motorFR -= x;
+            motorBL -= x;
+        }
+        if (x > 0 && y < 0) {
+            motorFR += x;
+            motorBL += x;
+        }
+        if (x < 0 && y > 0) {
+            motorFL -= x;
+            motorBR -= x;
+        }
+        if (x < 0 && y < 0) {
+            motorFL += x;
+            motorBR += x;
+        }
+
+        motorFL -= Math.pow(turn, 5)*TURN_SPEED;
+        motorFR += Math.pow(turn, 5)*TURN_SPEED;
+        motorBL -= Math.pow(turn, 5)*TURN_SPEED;
+        motorBR += Math.pow(turn, 5)*TURN_SPEED;
+
+        motorFL = Range.clip(motorFL, -1, 1);
+        motorFR = Range.clip(motorFR, -1, 1);
+        motorBL = Range.clip(motorBL, -1, 1);
+        motorBR = Range.clip(motorBR, -1, 1);
+
+        leftFront.setPower(motorFL);
+        rightFront.setPower(motorFR);
+        leftBack.setPower(motorBL);
+        rightBack.setPower(motorBR);
+    }
+
+
     //@Override
     public void runOpMode() {
 
@@ -133,6 +176,7 @@ public class ZorbDriveMecanum extends LinearOpMode {
         rightClose.setPosition(0.5);
         // Wait for the start button0
 
+
         telemetry.addData(">", "Press Start to use Zorb's awesome drive for the Ragbot" );
         telemetry.addData(">", "    ____               __          __ " );
         telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
@@ -155,38 +199,6 @@ public class ZorbDriveMecanum extends LinearOpMode {
             if (Math.abs(joystickTurn) < 0.01) {
                 joystickTurn = 0;
             }
-            motorFL = Math.pow(joystickForward, 5);
-            motorFR =  Math.pow(joystickForward, 5);
-            motorBL = Math.pow(joystickForward, 5);
-            motorBR =  Math.pow(joystickForward, 5);
-
-            if (joystickSide > 0 && joystickForward > 0) {
-                motorFR -= joystickSide;
-                motorBL -= joystickSide;
-            }
-            if (joystickSide > 0 && joystickForward < 0) {
-                motorFR += joystickSide;
-                motorBL += joystickSide;
-            }
-            if (joystickSide < 0 && joystickForward > 0) {
-                motorFL -= joystickSide;
-                motorBR -= joystickSide;
-            }
-            if (joystickSide < 0 && joystickForward < 0) {
-                motorFL += joystickSide;
-                motorBR += joystickSide;
-            }
-
-            motorFL -= Math.pow(joystickTurn, 5)*TURN_SPEED;
-            motorFR += Math.pow(joystickTurn, 5)*TURN_SPEED;
-            motorBL -= Math.pow(joystickTurn, 5)*TURN_SPEED;
-            motorBR += Math.pow(joystickTurn, 5)*TURN_SPEED;
-
-            motorFL = Range.clip(motorFL, -1, 1);
-            motorFR = Range.clip(motorFR, -1, 1);
-            motorBL = Range.clip(motorBL, -1, 1);
-            motorBR = Range.clip(motorBR, -1, 1);
-
 
 
             lBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
@@ -204,10 +216,7 @@ public class ZorbDriveMecanum extends LinearOpMode {
 
             // Set the servo to the new position and pause;
 
-            leftFront.setPower(motorFL);
-            rightFront.setPower(motorFR);
-            leftBack.setPower(motorBL);
-            rightBack.setPower(motorBR);
+            move(joystickSide, joystickForward, joystickTurn);
 /*
             if (gamepad1.x) {
                 arm.setPower(0);
