@@ -87,22 +87,25 @@ public class ZorbDriveMecanum extends LinearOpMode {
         motorFR =  Math.pow(y, 5);
         motorBL = Math.pow(y, 5);
         motorBR =  Math.pow(y, 5);
-
+        telemetry.addData("x axis movement", x);
+        telemetry.addData("y axis movement", y);
+        telemetry.addData("Turning", turn);
         x = Math.pow(x, 5);
 
-        if (x > 0 && y > 0) {
+        if (x > 0 && y >= 0) { // forward right
             motorFR -= x;
             motorBL -= x;
+
         }
-        if (x > 0 && y < 0) {
+        if (x > 0 && y <= 0) { // backward right
             motorFR += x;
             motorBL += x;
         }
-        if (x < 0 && y > 0) {
+        if (x < 0 && y >= 0) { // forward left
             motorFL -= x;
             motorBR -= x;
         }
-        if (x < 0 && y < 0) {
+        if (x < 0 && y <= 0) { // backward left
             motorFL += x;
             motorBR += x;
         }
@@ -116,6 +119,11 @@ public class ZorbDriveMecanum extends LinearOpMode {
         motorFR = Range.clip(motorFR, -1, 1);
         motorBL = Range.clip(motorBL, -1, 1);
         motorBR = Range.clip(motorBR, -1, 1);
+
+        telemetry.addData("motorFR", motorFR);
+        telemetry.addData("motorBL", motorBL);
+        telemetry.addData("motorFL", motorFL);
+        telemetry.addData("motorBR", motorBR);
 
         leftFront.setPower(motorFL);
         rightFront.setPower(motorFR);
@@ -199,70 +207,21 @@ public class ZorbDriveMecanum extends LinearOpMode {
             if (Math.abs(joystickTurn) < 0.01) {
                 joystickTurn = 0;
             }
-
-
             lBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
             rBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
-
 
             CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger),5);
             CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
             leftClose.setPosition(0.5 + CLAW_POS);
             rightClose.setPosition(0.5 - CLAW_POS);
 
-            // Display the current value
             telemetry.addData(">", "Press Stop to end Zorb's epic drive." );
             telemetry.update();
 
-            // Set the servo to the new position and pause;
-
             move(joystickSide, joystickForward, joystickTurn);
-/*
-            if (gamepad1.x) {
-                arm.setPower(0);
-                //drive forward
-                leftDrive.setPower(FORWARD_SPEED);
-                rightDrive.setPower(FORWARD_SPEED);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < .5)) {
-                    telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
-
-                // Step 2:  Spin right for 2 seconds
-                leftDrive.setPower(-TURN_SPEED);
-                rightDrive.setPower(TURN_SPEED);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < 2.2)) {
-                    telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
-
-                // Step 3:  Drive Back for .5 seconds
-                leftDrive.setPower(-FORWARD_SPEED);
-                rightDrive.setPower(-FORWARD_SPEED);
-                runtime.reset();
-                while (opModeIsActive() && (runtime.seconds() < .5)) {
-                    telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-                    telemetry.update();
-                }
-                leftDrive.setPower(0);
-                rightDrive.setPower(0);
-                //lower the arm
-                // Step 4:  Stop
-                leftDrive.setPower(0);
-                rightDrive.setPower(0);
-                telemetry.addData("Path", "Complete");
-                telemetry.update();
-            }
-
-
-*/
             sleep(CYCLE_MS);
             idle();
         }
-
-        // Signal done;
         telemetry.addData(">", "Done");
         telemetry.update();
     }

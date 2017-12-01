@@ -46,6 +46,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -70,9 +71,9 @@ import com.qualcomm.robotcore.util.Range;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Zorb Epicness VuMark", group ="Concept")
+@Autonomous(name="Red Audience Ragbot", group ="Concept")
 //@Disabled
-public class ZorbVuForiaEpicness extends LinearOpMode {
+public class AutoRagbotRedAudience extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront   = null;
@@ -83,6 +84,7 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
+    ColorSensor sensorColor;
     double  motorFL = 0;
     double motorFR = 0;
     double  motorBL = 0;
@@ -99,22 +101,25 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         motorFR =  Math.pow(y, 5);
         motorBL = Math.pow(y, 5);
         motorBR =  Math.pow(y, 5);
-
+        telemetry.addData("x axis movement", x);
+        telemetry.addData("y axis movement", y);
+        telemetry.addData("Turning", turn);
         x = Math.pow(x, 5);
 
-        if (x > 0 && y > 0) {
+        if (x > 0 && y >= 0) { // forward right
             motorFR -= x;
             motorBL -= x;
+
         }
-        if (x > 0 && y < 0) {
+        if (x > 0 && y <= 0) { // backward right
             motorFR += x;
             motorBL += x;
         }
-        if (x < 0 && y > 0) {
+        if (x < 0 && y >= 0) { // forward left
             motorFL -= x;
             motorBR -= x;
         }
-        if (x < 0 && y < 0) {
+        if (x < 0 && y <= 0) { // backward left
             motorFL += x;
             motorBR += x;
         }
@@ -128,6 +133,11 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         motorFR = Range.clip(motorFR, -1, 1);
         motorBL = Range.clip(motorBL, -1, 1);
         motorBR = Range.clip(motorBR, -1, 1);
+
+        telemetry.addData("motorFR", motorFR);
+        telemetry.addData("motorBL", motorBL);
+        telemetry.addData("motorFL", motorFL);
+        telemetry.addData("motorBR", motorBR);
 
         leftFront.setPower(motorFL);
         rightFront.setPower(motorFR);
@@ -169,6 +179,7 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
+        sensorColor = hardwareMap.get(ColorSensor.class, "sensor_color_distance");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -196,6 +207,13 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
         relicTrackables.activate();
 
         while (opModeIsActive()) {
+
+            if (sensorColor.red() > sensorColor.blue()) {
+                telemetry.addLine("It is red");
+            }else if (sensorColor.red() < sensorColor.blue()) {
+                telemetry.addLine("It is blue");
+            }
+
 
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
@@ -233,6 +251,12 @@ public class ZorbVuForiaEpicness extends LinearOpMode {
                 telemetry.addData("VuMark", "Not found ):");
                 move(0,0,0);
             }
+
+
+            /*telemetry.addData("Red  ", sensorColor.red());
+            telemetry.addData("Green", sensorColor.green());
+            telemetry.addData("Blue ", sensorColor.blue());*/
+
 
             telemetry.update();
         }
