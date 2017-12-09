@@ -83,22 +83,24 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
 
     public static double getAngle(double x, double y)
     {
-        return ((1.5 * Math.PI - Math.atan2(y,x))/Math.PI)-1;
+        //return Math.atan2(y,x);
+        //return ((1.5 * Math.PI - Math.atan2(y,x))/Math.PI)-1;
+        return (1.5 * Math.PI - Math.atan2(y,x));
     }
 
     public void mecanum(double dir, double speed, double turn) {
-        motorFL = speed*Math.sin(2*Math.PI*dir + Math.PI/4) + turn;
-        motorBR = speed*Math.sin(2*Math.PI*dir + Math.PI/4) - turn;
-        motorFR = speed*Math.cos(2*Math.PI*dir + Math.PI/4) - turn;
-        motorBL = speed*Math.cos(2*Math.PI*dir + Math.PI/4) + turn;
+        motorFL = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) + turn;
+        motorBR = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) - turn;
+        motorFR = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) - turn;
+        motorBL = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) + turn;
+        telemetry.addData("Direction:", dir);
     }
 
     public void move(double x, double y, double turn) {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-        x = Math.pow(x, 5);
-        y = Math.pow(y, 5);
+
 
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
@@ -107,10 +109,10 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         telemetry.addData("motorFL", motorFL);
         telemetry.addData("motorBR", motorBR);
 
-        leftFront.setPower(motorFL);
-        rightFront.setPower(motorFR);
-        leftBack.setPower(motorBL);
-        rightBack.setPower(motorBR);
+        leftFront.setPower(Math.pow(motorFL, 7));
+        rightFront.setPower(Math.pow(motorFR, 7));
+        leftBack.setPower(Math.pow(motorBL, 7));
+        rightBack.setPower(Math.pow(motorBR, 7));
     }
 
 
@@ -180,14 +182,14 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
 
         while(opModeIsActive()){
             joystickForward = gamepad1.right_stick_y;
-            joystickSide = gamepad1.right_stick_x;
+            joystickSide = -gamepad1.right_stick_x;
             joystickTurn = gamepad1.left_stick_x;
 
             if (Math.abs(joystickForward) < 0.01) {
-                joystickForward = 0;
+            //    joystickForward = 0;
             }
             if (Math.abs(joystickTurn) < 0.01) {
-                joystickTurn = 0;
+            //    joystickTurn = 0;
             }
             lBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
             rBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
