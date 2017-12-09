@@ -91,6 +91,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
 
     public void mecanum(double dir, double speed, double turn) {
         speed = Math.pow(speed, exponent);
+        turn = Math.pow(turn, exponent);
         motorFL = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) + turn;
         motorBR = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) - turn;
         motorFR = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) - turn;
@@ -184,7 +185,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         while(opModeIsActive()){
             joystickForward = gamepad1.right_stick_y;
             joystickSide = -gamepad1.right_stick_x;
-            joystickTurn = gamepad1.left_stick_x;
+            joystickTurn = gamepad1.left_stick_x/3;
 
             if (Math.abs(joystickForward) < 0.01) {
             //    joystickForward = 0;
