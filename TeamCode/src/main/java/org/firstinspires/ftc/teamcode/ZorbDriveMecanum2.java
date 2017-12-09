@@ -74,6 +74,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
     double motorFR = 0;
     double  motorBL = 0;
     double motorBR = 0;
+    double exponent = 3;
     double joystickForward = 0;
     double joystickTurn = 0;
     double joystickSide = 0;
@@ -89,6 +90,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
     }
 
     public void mecanum(double dir, double speed, double turn) {
+        speed = Math.pow(speed, exponent);
         motorFL = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) + turn;
         motorBR = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) - turn;
         motorFR = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) - turn;
@@ -101,7 +103,6 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
 
-
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
@@ -109,10 +110,10 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         telemetry.addData("motorFL", motorFL);
         telemetry.addData("motorBR", motorBR);
 
-        leftFront.setPower(Math.pow(motorFL, 7));
-        rightFront.setPower(Math.pow(motorFR, 7));
-        leftBack.setPower(Math.pow(motorBL, 7));
-        rightBack.setPower(Math.pow(motorBR, 7));
+        leftFront.setPower(motorFL);
+        rightFront.setPower(motorFR);
+        leftBack.setPower(motorBL);
+        rightBack.setPower(motorBR);
     }
 
 
@@ -191,11 +192,18 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
             if (Math.abs(joystickTurn) < 0.01) {
             //    joystickTurn = 0;
             }
-            lBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
-            rBelt.setPower(-Math.pow(gamepad1.left_stick_y, 5));
+            lBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
+            rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
 
-            CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger),5);
-            CLAW_POS = Range.clip(CLAW_POS, 0, 0.5);
+            if (gamepad1.right_bumper) {
+                CLAW_POS = 0.3;
+            }
+            if (gamepad1.left_bumper) {
+                CLAW_POS = 0;
+            }
+
+            //CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger),5);
+            CLAW_POS = Range.clip(CLAW_POS, 0, 0.3);
             leftClose.setPosition(0.5 + CLAW_POS);
             rightClose.setPosition(0.5 - CLAW_POS);
 
