@@ -53,9 +53,9 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "RagBot MecanumDrive", group = "Cyber Scots")
+@TeleOp(name = "[MECANUM] RagBot ZorbDrive", group = "Cyber Scots")
 //@Disabled
-public class ZorbDriveMecanum extends LinearOpMode {
+public class ZorbDriveMecanum2 extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
@@ -81,44 +81,26 @@ public class ZorbDriveMecanum extends LinearOpMode {
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
+    public static double getAngle(double x, double y)
+    {
+        return ((1.5 * Math.PI - Math.atan2(y,x))/Math.PI)-1;
+    }
+
+    public void mecanum(double dir, double speed, double turn) {
+        motorFL = speed*Math.sin(2*Math.PI*dir + Math.PI/4) + turn;
+        motorBR = speed*Math.sin(2*Math.PI*dir + Math.PI/4) - turn;
+        motorFR = speed*Math.cos(2*Math.PI*dir + Math.PI/4) - turn;
+        motorBL = speed*Math.cos(2*Math.PI*dir + Math.PI/4) + turn;
+    }
 
     public void move(double x, double y, double turn) {
-        motorFL = Math.pow(y, 5);
-        motorFR =  Math.pow(y, 5);
-        motorBL = Math.pow(y, 5);
-        motorBR =  Math.pow(y, 5);
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
         x = Math.pow(x, 5);
+        y = Math.pow(y, 5);
 
-        if (x > 0 && y >= 0) { // forward right
-            motorFR -= x;
-            motorBL -= x;
-
-        }
-        if (x > 0 && y <= 0) { // backward right
-            motorFR += x;
-            motorBL += x;
-        }
-        if (x < 0 && y >= 0) { // forward left
-            motorFL -= x;
-            motorBR -= x;
-        }
-        if (x < 0 && y <= 0) { // backward left
-            motorFL += x;
-            motorBR += x;
-        }
-
-        motorFL -= Math.pow(turn, 5)*TURN_SPEED;
-        motorFR += Math.pow(turn, 5)*TURN_SPEED;
-        motorBL -= Math.pow(turn, 5)*TURN_SPEED;
-        motorBR += Math.pow(turn, 5)*TURN_SPEED;
-
-        motorFL = Range.clip(motorFL, -1, 1);
-        motorFR = Range.clip(motorFR, -1, 1);
-        motorBL = Range.clip(motorBL, -1, 1);
-        motorBR = Range.clip(motorBR, -1, 1);
+        mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
         telemetry.addData("motorBL", motorBL);
