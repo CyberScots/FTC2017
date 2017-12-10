@@ -62,7 +62,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Red Audience Ragbot", group ="Concept")
+@Autonomous(name="Blue Far Ragbot", group ="Concept")
 //@Disabled
 public class AutoRagbotBlueFar extends LinearOpMode {
 
