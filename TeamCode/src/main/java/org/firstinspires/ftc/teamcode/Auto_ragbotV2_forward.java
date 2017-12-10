@@ -165,14 +165,14 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
         leftClose.setPosition(0.5);
         rightClose.setPosition(0.5);
         // Wait for the start button0
-        telemetry.addData(">", "_________      _________  " );
-        telemetry.addData(">", "| _______`.    |        |" );
-        telemetry.addData(">", "| |    |  |    |        |" );
-        telemetry.addData(">", "| |____|  |    |        |" );
-        telemetry.addData(">", "|  ____  /     |        |" );
-        telemetry.addData(">", "| |    `.`.    |        |" );
-        telemetry.addData(">", "| |     | |    |        |" );
-        telemetry.addData(">", "|_|     |_|    |        |" );
+        telemetry.addData(">", "_________      _________   ________          " );
+        telemetry.addData(">", "| _______`.    | _____ |                     " );
+        telemetry.addData(">", "| |    |  |    | |   | |                  " );
+        telemetry.addData(">", "| |____|  |    | |___| |                  " );
+        telemetry.addData(">", "|  ____  .'    | _____ |                  " );
+        telemetry.addData(">", "| |    `.`.    | |   | |                   " );
+        telemetry.addData(">", "| |     | |    | |   | |                   " );
+        telemetry.addData(">", "|_|     |_|    |_|   |_|                  " );
 
         telemetry.addData(">", "Press Start" );
         telemetry.update();
@@ -188,7 +188,7 @@ telemetry.addLine("starting");
         }*/
 
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 5)) {
+        while (opModeIsActive() && (runtime.seconds() < 2)) {
             move(0,1,.1);
         }
         move(0,0,0);
