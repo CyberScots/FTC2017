@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
  import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -57,7 +58,7 @@ package org.firstinspires.ftc.teamcode;
   */
 //setup the code
  @Autonomous(name="Glyph Auto Rag Bot Red;+:Audience", group="Pushbot")
- //@Disabled
+ @Disabled
  public class AutoRagBot_RedAudience_Linear_w_gliph extends LinearOpMode {
 
      /* Declare OpMode members. */

@@ -106,7 +106,7 @@ public class AutoRagbotRedFar extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-
+        turn -= x;
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
