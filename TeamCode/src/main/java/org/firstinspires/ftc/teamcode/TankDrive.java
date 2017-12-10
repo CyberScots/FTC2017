@@ -61,7 +61,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name = "TankDrive USE THIS ONE", group = "Cyber Scots")
-//@Disabled
+@Disabled
 public class TankDrive extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle

@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 /**
  * This OpMode scans a single servo back and forwards until Stop is pressed.
@@ -51,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @TeleOp(name = "TankDrive Exponential", group = "Cyber Scots")
-//@Disabled
+@Disabled
 public class TankDriveExponential extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle

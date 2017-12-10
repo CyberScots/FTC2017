@@ -108,7 +108,7 @@ public class ConceptRegisterOpModes
       // manager.register("DIM as Indicator",       ConceptDIMAsIndicator.class);
       // manager.register("I2C Address Change",     ConceptI2cAddressChange.class);
       // manager.register("Ramp Motor Speed",       ConceptRampMotorSpeed.class);
-      manager.register("Passjack Drive",             TankDrive.class);
+      //manager.register("Passjack Drive",             TankDrive.class);
       // manager.register("Telemetry",              ConceptTelemetry.class);
       // manager.register("Vuforia Navigation",     ConceptVuforiaNavigation.class);
     }
