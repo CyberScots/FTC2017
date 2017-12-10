@@ -62,9 +62,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Blue Far Ragbot", group ="Concept")
+@Autonomous(name="Ragbot_V2fwd", group ="Concept")
 //@Disabled
-public class AutoRagbotBlueFar extends LinearOpMode {
+public class Auto_ragbotV2_forward extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront   = null;
@@ -165,17 +165,20 @@ public class AutoRagbotBlueFar extends LinearOpMode {
         leftClose.setPosition(0.5);
         rightClose.setPosition(0.5);
         // Wait for the start button0
+        telemetry.addData(">", "_________      _________  " );
+        telemetry.addData(">", "| _______`.    |        |" );
+        telemetry.addData(">", "| |    |  |    |        |" );
+        telemetry.addData(">", "| |____|  |    |        |" );
+        telemetry.addData(">", "|  ____  /     |        |" );
+        telemetry.addData(">", "| |    `.`.    |        |" );
+        telemetry.addData(">", "| |     | |    |        |" );
+        telemetry.addData(">", "|_|     |_|    |        |" );
 
-        telemetry.addData(">", "Press Start to use Zorb's awesome VuForia for the Ragbot" );
-        telemetry.addData(">", "    ____               __          __ " );
-        telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
-        telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
-        telemetry.addData(">", " / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
-        telemetry.addData(">", "/_/ |_|\\__,_/\\__, /_.___/\\____/\\__/  " );
-        telemetry.addData(">", "            /____/                   " );
+        telemetry.addData(">", "Press Start" );
         telemetry.update();
         waitForStart();
-
+telemetry.addLine("starting");
+        telemetry.update();
         runtime.reset();
         relicTrackables.activate();
 
@@ -184,78 +187,20 @@ public class AutoRagbotBlueFar extends LinearOpMode {
         } else if (sensorColor.red() < sensorColor.blue()) {
         }*/
 
-
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 5)) {
+            move(0,1,.1);
+        }
+        move(0,0,0);
+        leftClose.setPosition(0.8);
+        rightClose.setPosition(0.2);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1)) {
-            move(1,0,0);
+            move(0, .1, 0);
         }
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.4)) {
-            move(0,1,0);
+        while (opModeIsActive() && (runtime.seconds() < .5)) {
+            move(0, -.2, 0);
         }
-
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            move(0,-0.5,0);
-        }
-move(0,0,0);
-/*
-        runtime.reset();
-
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            move(0.5,1.5,0);
-        }
-        move(0,0,0);*/
-            /*RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                if (vuMark == RelicRecoveryVuMark.LEFT) {
-                    telemetry.addData("VuMark Detected: ", "Left");
-                    move(-1,0,0);
-                }
-                if (vuMark == RelicRecoveryVuMark.CENTER) {
-                    telemetry.addData("VuMark Detected: ", "Center");
-                    move(0,1,0);
-                }
-                if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                    telemetry.addData("VuMark Detected: ", "Right");
-                    move(1,0,0);
-                }
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-                telemetry.addData("Pose", format(pose));
-
-                if (pose != null) {
-                    VectorF trans = pose.getTranslation();
-                    Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
-
-                    // Extract the X, Y, and Z components of the offset of the target relative to the robot
-                    double tX = trans.get(0);
-                    double tY = trans.get(1);
-                    double tZ = trans.get(2);
-
-                    // Extract the rotational components of the target relative to the robot
-                    double rX = rot.firstAngle;
-                    double rY = rot.secondAngle;
-                    double rZ = rot.thirdAngle;
-                }
-            }
-            else {
-                telemetry.addData("VuMark", "Not found ):");
-                move(0,0,0);
-            }*/
-
-
-            /*telemetry.addData("Red  ", sensorColor.red());
-            telemetry.addData("Green", sensorColor.green());
-            telemetry.addData("Blue ", sensorColor.blue());*/
-
-
-            telemetry.update();
-        }
-
-
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 }

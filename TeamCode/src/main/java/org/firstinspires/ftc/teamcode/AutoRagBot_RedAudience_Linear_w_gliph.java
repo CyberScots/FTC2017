@@ -77,7 +77,7 @@ package org.firstinspires.ftc.teamcode;
           */
          robot.init(hardwareMap);
          robot.leftClaw.setPosition(.7);
-         robot.rightClaw.setPosition(-.7);
+         robot.rightClaw.setPosition(.3);
          // Send telemetry message to signify robot waiting;
          telemetry.addData("Status", "Hacking your phone");    //
          telemetry.update();
