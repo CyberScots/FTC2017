@@ -166,8 +166,8 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         lBelt.setPower(0);
         rBelt.setDirection(DcMotor.Direction.REVERSE);
         rBelt.setPower(0);
-        leftClose.setPosition(0.5);
-        rightClose.setPosition(0.5);
+        leftClose.setPosition(0.2);
+        rightClose.setPosition(0.8);
         // Wait for the start button0
 
 
