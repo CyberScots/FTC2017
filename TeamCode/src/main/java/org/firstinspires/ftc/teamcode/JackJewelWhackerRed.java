@@ -32,7 +32,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -62,10 +65,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Ragbot_V2fwd", group ="Concept")
+@Autonomous(name="JackJewelWhackerRed", group ="Concept")
 //@Disabled
-public class Auto_ragbotV2_forward extends LinearOpMode {
-
+public class JackJewelWhackerRed extends LinearOpMode {
+    NormalizedColorSensor colorSensor;
+    public static final Double downArm = 0.75;
+    public static final Double upArm = 0.0;
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
@@ -75,29 +80,31 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
     public DcMotor rBelt = null;
     public Servo leftClose = null;
     public Servo rightClose = null;
+    public Servo servoArm = null;
     ColorSensor sensorColor;
     double motorFL = 0;
     double motorFR = 0;
     double motorBL = 0;
     double motorBR = 0;
     static final double FORWARD_SPEED = 1;
-    static final double TURN_SPEED = 0.5;
+    static final double TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
     VuforiaLocalizer vuforia;
 
-    public static double getAngle(double x, double y) {
+    public static double getAngle(double x, double y)
+    {
         //return Math.atan2(y,x);
         //return ((1.5 * Math.PI - Math.atan2(y,x))/Math.PI)-1;
-        return (1.5 * Math.PI - Math.atan2(-y, -x));
+        return (1.5 * Math.PI - Math.atan2(-y,-x));
     }
 
     public void mecanum(double dir, double speed, double turn) {
-        motorFL = speed * Math.sin(/*2*Math.PI**/dir + Math.PI / 4) + turn;
-        motorBR = speed * Math.sin(/*2*Math.PI**/dir + Math.PI / 4) - turn;
-        motorFR = speed * Math.cos(/*2*Math.PI**/dir + Math.PI / 4) - turn;
-        motorBL = speed * Math.cos(/*2*Math.PI**/dir + Math.PI / 4) + turn;
+        motorFL = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) + turn;
+        motorBR = speed*Math.sin(/*2*Math.PI**/dir + Math.PI/4) - turn;
+        motorFR = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) - turn;
+        motorBL = speed*Math.cos(/*2*Math.PI**/dir + Math.PI/4) + turn;
         telemetry.addData("Direction:", dir);
     }
 
@@ -106,7 +113,7 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
 
-        mecanum(getAngle(x, y), Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)), turn);
+        mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
         telemetry.addData("motorBL", motorBL);
@@ -119,9 +126,8 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
         rightBack.setPower(motorBR);
     }
 
-    @Override
-    public void runOpMode() {
-        telemetry.addData(">", "INITIALIZE");
+    @Override public void runOpMode() {
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -140,20 +146,22 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code onthe next line, between the double quotes.
          */
+
         parameters.vuforiaLicenseKey = "AcRNMjL/////AAAAGYx9swjI4EM3gOz2yIkuui5Eo0LMsIsAxmD+X+Lz2Eox41tmaut+zNhNGm68NGyXSnmYIwcWSIVz/fOZf+ht++8XJScyjQv/BDbKKOOEZ3//KzhxFkS93SlQ3OKX+KhDdtv/USecJsSYAMY/A77pOHu10H6SXHGC2fTuCa1+mzp6rEpugFFC0JxcTJSyFTx3IMvH4BPU98zZbTbb8bnVl1usz84xusFUTKGua19+lvZ1gBwfe/SltwgQZEmzTrQPT7K8cnu0obpmxspet8k5FHbqeJvzXV9PMK1wd2+wYygYQMeJCOrg/ZIE/fRODW4sgDIt6L85XMehoidJ3aE2csreAsiSaQsFgnYe4H07XwDi";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary
-        leftFront = hardwareMap.get(DcMotor.class, "left_front");
-        rightFront = hardwareMap.get(DcMotor.class, "right_front");
-        leftBack = hardwareMap.get(DcMotor.class, "left_back");
-        rightBack = hardwareMap.get(DcMotor.class, "right_back");
-        lBelt = hardwareMap.get(DcMotor.class, "left_belt");
-        rBelt = hardwareMap.get(DcMotor.class, "right_belt");
-        rightClose = hardwareMap.get(Servo.class, "right_close");
-        leftClose = hardwareMap.get(Servo.class, "left_close");
+        leftFront  = hardwareMap.get(DcMotor.class, "left_front");
+        rightFront  = hardwareMap.get(DcMotor.class, "right_front");
+        leftBack  = hardwareMap.get(DcMotor.class, "left_back");
+        rightBack  = hardwareMap.get(DcMotor.class, "right_back");
+        lBelt  = hardwareMap.get(DcMotor.class, "left_belt");
+        rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
+        rightClose  = hardwareMap.get(Servo.class, "right_close");
+        leftClose  = hardwareMap.get(Servo.class, "left_close");
+        servoArm  = hardwareMap.get(Servo.class, "servoArm");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -165,60 +173,89 @@ public class Auto_ragbotV2_forward extends LinearOpMode {
         leftClose.setPosition(0.5);
         rightClose.setPosition(0.5);
         // Wait for the start button0
-        telemetry.addData(">", " ________  press _____  start  _______     ______        _____       _________             ");
-        telemetry.addData(">", "|/////////.    .///////.     ////////|    |//////`.    .///////.    |/////////|            ");
-        telemetry.addData(">", "|/|____|//|    |/|___|/|    |/|   ___     |/|___|/|    |/|   |/|        |/|                ");
-        telemetry.addData(">", "|/////////     |///////|    |/|  |///|    |///// <     |/|   |/|        |/|                ");
-        telemetry.addData(">", "|/|     |/|    |/|   |/|    |/|____|/|    |/|___|/|    |/|___|/|       _|/|_               ");
-        telemetry.addData(">", "|/|     |/|    |/|   |/|     `///////'    |///////'    '///////'      |/////|              ");
-        telemetry.addData(">", "  ______      __    _      _           _______      __    _       ______        _                                    ");
-        telemetry.addData(">", ".///////.    |//|. |/|    |/|         |///////|    |//|  |/|     |//////|      |/|        ");
-        telemetry.addData(">", "|/|   |/|    |/||| |/|    |/|            |/|       |/||| |/|     |/|__         |/|        ");
-        telemetry.addData(">", "|/|   |/|    |/| |||/|    |/|   _        |/|       |/| |||/|     |////|        |/|        ");
-        telemetry.addData(">", "|/|___|/|    |/|  ||/|    |/|__|/|     __|/|__     |/|  ||/|     |/|____        _         ");
-        telemetry.addData(">", "'///////'    |/|   |/|    |//////|    |///////|    |/|   |/|     |//////|      |/|        ");
-        telemetry.addData(">", "Press Start");
+
+        telemetry.addData(">", "Press Start" );
         telemetry.update();
         waitForStart();
         telemetry.addLine("starting");
         telemetry.update();
         runtime.reset();
         relicTrackables.activate();
+        //GET GLYPH INTO CRYPTO-BOX
+        WhackOp();
+        for (int loop = 0; loop < 5; loop++)
+            runtime.reset();
 
-/*
-        if (sensorColor.red() > sensorColor.blue()) {
-        } else if (sensorColor.red() < sensorColor.blue()) {
-        }*/
-
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            move(0, 1, 0);//go forward
-        }
-        move(0, 0, 0); //open claw
-        leftClose.setPosition(1); //
-        rightClose.setPosition(0);
-        runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1)) {
-            move(0, .0, 0);
+            move(0, 1, .1);
         }
+        {
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1)) {
+                move(0, 1, .1);
+            }
+            move(0,0,0);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .1)) {
+                    move(0,-.5,.1);
+            }
+
+        }
+        move(0,0,0);
+        //open CLAW
+        leftClose.setPosition(0.8);
+        rightClose.setPosition(0.2);
+        //PUSH GLYPH IN
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 1)) {
             move(0, .1, 0);
         }
+        //BACK OFF
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < .5)) {
             move(0, -.2, 0);
-
-            for (int loop = 0; loop < 6; loop++)
-                runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 1)) {
-                move(0, .1, .1);
-            }
-            runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < 1)) {
-                move(0, -.1, -.1);
-
-            }
         }
+    }
+    void WhackOp() {
+        runtime.reset();
+        while(opModeIsActive() && runtime.seconds() < .28) {
+        move(1, 0, 0);
+        // meant to go 5.25 inches to the right
+        }
+        move(0, 0, 0);
+        //move the servo down ye bag 'O' wires
+        servoArm.setPosition (downArm);
+        sleep(1000);
+        //identify jewel in front of arm
+        SwitchableLight light = (SwitchableLight)colorSensor;
+        light.enableLight(true);
+        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        telemetry.addLine()
+                .addData("r", "%.3f", colors.red)
+                .addData("b", "%.3f", colors.blue);
+        //whack away opposing jewel
+        if (colors.red > 5) {WhacksOnForward();}
+            else {WhacksOnBackwards();}
+
+        //party
+
+
+        servoArm.setPosition (upArm);
+    }
+    void WhacksOnForward(){
+        runtime.reset();
+        while(opModeIsActive() && runtime.seconds() < .25) {
+            move(0, 1, 0);
+
+        }
+        move(0, 0, 0);
+    }
+    void WhacksOnBackwards(){
+        runtime.reset();
+        while(opModeIsActive() && runtime.seconds() < .25) {
+            move(0, -1, 0);
+
+        }
+        move(0, 0, 0);
     }
 }

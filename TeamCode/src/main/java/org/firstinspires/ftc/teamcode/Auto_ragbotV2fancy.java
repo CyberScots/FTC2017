@@ -175,8 +175,12 @@ public class Auto_ragbotV2fancy extends LinearOpMode {
         runtime.reset();
         relicTrackables.activate();
         //GET GLYPH INTO CRYPTO-BOX
-        for (int loop = 0; loop < 15; loop++)
+        for (int loop = 0; loop < 5; loop++)
+            runtime.reset();
 
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            move(0, 1, .1);
+        }
         {
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < 1)) {
@@ -190,7 +194,7 @@ public class Auto_ragbotV2fancy extends LinearOpMode {
 
         }
         move(0,0,0);
-        //CLOSE CLAW
+        //open CLAW
         leftClose.setPosition(0.8);
         rightClose.setPosition(0.2);
         //PUSH GLYPH IN
