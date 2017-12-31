@@ -225,17 +225,20 @@ public class JackJewelWhackerRed extends LinearOpMode {
         //identify jewel in front of arm
         SwitchableLight light = (SwitchableLight)colorSensor;
         light.enableLight(true);
-        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        colorSensor.enableLed(true);
         telemetry.addLine()
-                .addData("r", "%.3f", colors.red)
-                .addData("b", "%.3f", colors.blue);
+                .addData("Red", colorSensor.red())
+                .addData("Blue", colorSensor.blue());
         //whack away opposing jewel
-        if (colors.red > 5) {WhacksOnForward();}
-            else {WhacksOnBackwards();}
-
+        if (colorSensor.red()>2 || colorSensor.blue()>2) {
+            if (colorSensor.red() > colorSensor.blue()) {
+                WhacksOnBackwards();
+            }
+            if (colorSensor.red() < colorSensor.blue()) {
+                WhacksOnForward();
+            }
+        }
         //party
-
-
         servoArm.setPosition (upArm);
     }
     void WhacksOnForward(){
@@ -254,5 +257,4 @@ public class JackJewelWhackerRed extends LinearOpMode {
         }
         move(0, 0, 0);
     }
-
 }
