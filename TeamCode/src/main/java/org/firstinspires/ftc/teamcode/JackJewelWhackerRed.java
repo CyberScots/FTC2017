@@ -236,7 +236,10 @@ public class JackJewelWhackerRed extends LinearOpMode {
             }
         }
         //party
-        servoArm.setPosition (upArm);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() < 2) {
+            servoArm.setPosition (upArm);
+        }
     }
     void WhacksOnForward(){
         runtime.reset();
