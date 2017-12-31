@@ -179,10 +179,11 @@ public class JackJewelWhackerRed extends LinearOpMode {
         waitForStart();
         telemetry.addLine("starting");
         telemetry.update();
-        runtime.reset();
+        WhackOp();
+       /* runtime.reset();
         relicTrackables.activate();
         //GET GLYPH INTO CRYPTO-BOX
-        WhackOp();
+
         for (int loop = 0; loop < 5; loop++)
             runtime.reset();
 
@@ -214,15 +215,10 @@ public class JackJewelWhackerRed extends LinearOpMode {
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < .5)) {
             move(0, -.2, 0);
-        }
+        }*/
     }
     void WhackOp() {
         runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < .28) {
-        move(1, 0, 0);
-        // meant to go 5.25 inches to the right
-        }
-        move(0, 0, 0);
         //move the servo down ye bag 'O' wires
         servoArm.setPosition (downArm);
         sleep(1000);
@@ -258,4 +254,5 @@ public class JackJewelWhackerRed extends LinearOpMode {
         }
         move(0, 0, 0);
     }
+
 }

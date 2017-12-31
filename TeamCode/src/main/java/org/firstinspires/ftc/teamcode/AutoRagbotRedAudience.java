@@ -89,6 +89,8 @@ public class AutoRagbotRedAudience extends LinearOpMode {
     double motorFR = 0;
     double  motorBL = 0;
     double motorBR = 0;
+    double sidewaysDistance = 2.4;
+    String cypher = "none";
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
@@ -115,7 +117,6 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-        turn -= x;
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
@@ -186,7 +187,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        runtime.reset();
+
 
         relicTrackables.activate();
 
@@ -194,44 +195,27 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         if (sensorColor.red() > sensorColor.blue()) {
         } else if (sensorColor.red() < sensorColor.blue()) {
         }*/
-
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.4)) {
-            move(-1,0,0);
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
-            move(0,1,0);
-        }
-
-
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            move(0,-0.5,0);
-        }
-move(0,0,0);
-/*
-        runtime.reset();
-
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            move(0.5,1.5,0);
-        }
-        move(0,0,0);*/
-            /*RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        while (cypher == "none" && runtime.seconds() < 5) {
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 if (vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addData("VuMark Detected: ", "Left");
-                    move(-1,0,0);
+                    telemetry.update();
+                    cypher = "left";
+                    sidewaysDistance = 2.8;
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
-                    move(0,1,0);
+                    telemetry.update();
+                    cypher = "center";
+                    sidewaysDistance = 2.4;
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
-                    move(1,0,0);
+                    telemetry.update();
+                    cypher = "right";
+                    sidewaysDistance = 1.9;
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -253,8 +237,34 @@ move(0,0,0);
             }
             else {
                 telemetry.addData("VuMark", "Not found ):");
-                move(0,0,0);
-            }*/
+                telemetry.update();
+            }
+        }
+
+
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
+            move(-.5,0,0);
+            telemetry.addLine("Moving Left");
+            telemetry.update();
+        }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+            move(0,.5,0);
+            telemetry.addLine("Moving Forward");
+            telemetry.update();
+        }
+
+
+        leftClose.setPosition(0.2);
+        rightClose.setPosition(0.8);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+            move(0,-0.5,0);
+            telemetry.addLine("Moving Back");
+            telemetry.update();
+        }
+        move(0,0,0);
 
 
             /*telemetry.addData("Red  ", sensorColor.red());

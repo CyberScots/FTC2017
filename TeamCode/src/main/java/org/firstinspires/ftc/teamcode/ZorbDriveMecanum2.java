@@ -103,7 +103,6 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-        turn -= x;
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
@@ -185,7 +184,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         while(opModeIsActive()){
             joystickForward = gamepad1.right_stick_y;
             joystickSide = -gamepad1.right_stick_x;
-            joystickTurn = gamepad1.left_stick_x/2;
+            joystickTurn = gamepad1.left_stick_x;
 
             if (Math.abs(joystickForward) < 0.01) {
             //    joystickForward = 0;
@@ -193,6 +192,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
             if (Math.abs(joystickTurn) < 0.01) {
             //    joystickTurn = 0;
             }
+
             lBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
             rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
 
