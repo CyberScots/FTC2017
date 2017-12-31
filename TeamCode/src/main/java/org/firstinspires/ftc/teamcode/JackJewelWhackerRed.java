@@ -69,8 +69,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //@Disabled
 public class JackJewelWhackerRed extends LinearOpMode {
     ColorSensor colorSensor;    // Hardware Device Object
-    public static final Double downArm = 1.0;
-    public static final Double upArm = 0.0;
+    public static final Double downArm = 0.0;
+    public static final Double upArm = 1.0;
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
@@ -81,13 +81,12 @@ public class JackJewelWhackerRed extends LinearOpMode {
     public Servo leftClose = null;
     public Servo rightClose = null;
     public Servo servoArm = null;
-    ColorSensor sensorColor;
     double motorFL = 0;
     double motorFR = 0;
     double motorBL = 0;
     double motorBR = 0;
     static final double FORWARD_SPEED = 1;
-    static final double TURN_SPEED    = 0.5;
+    static final double TURN_SPEED = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
@@ -127,7 +126,7 @@ public class JackJewelWhackerRed extends LinearOpMode {
     }
 
     @Override public void runOpMode() {
-
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
