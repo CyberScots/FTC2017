@@ -68,7 +68,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 @Autonomous(name="JackJewelWhackerRed", group ="Concept")
 //@Disabled
 public class JackJewelWhackerRed extends LinearOpMode {
-    NormalizedColorSensor colorSensor;
+    ColorSensor colorSensor;    // Hardware Device Object
     public static final Double downArm = 0.75;
     public static final Double upArm = 0.0;
     public static final String TAG = "Vuforia VuMark Sample";
