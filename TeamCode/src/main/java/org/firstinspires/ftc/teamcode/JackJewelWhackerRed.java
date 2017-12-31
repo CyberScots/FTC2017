@@ -69,7 +69,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //@Disabled
 public class JackJewelWhackerRed extends LinearOpMode {
     ColorSensor colorSensor;    // Hardware Device Object
-    public static final Double downArm = 0.75;
+    public static final Double downArm = 1.0;
     public static final Double upArm = 0.0;
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront = null;
@@ -223,14 +223,12 @@ public class JackJewelWhackerRed extends LinearOpMode {
         servoArm.setPosition (downArm);
         sleep(1000);
         //identify jewel in front of arm
-        SwitchableLight light = (SwitchableLight)colorSensor;
-        light.enableLight(true);
         colorSensor.enableLed(true);
         telemetry.addLine()
                 .addData("Red", colorSensor.red())
                 .addData("Blue", colorSensor.blue());
         //whack away opposing jewel
-        if (colorSensor.red()>2 || colorSensor.blue()>2) {
+        if (colorSensor.red() > 2 || colorSensor.blue() > 2) {
             if (colorSensor.red() > colorSensor.blue()) {
                 WhacksOnBackwards();
             }
@@ -243,7 +241,7 @@ public class JackJewelWhackerRed extends LinearOpMode {
     }
     void WhacksOnForward(){
         runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < .25) {
+        while(opModeIsActive() && runtime.seconds() < 0.25) {
             move(0, 1, 0);
 
         }
@@ -251,10 +249,12 @@ public class JackJewelWhackerRed extends LinearOpMode {
     }
     void WhacksOnBackwards(){
         runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < .25) {
+        while(opModeIsActive() && runtime.seconds() < 0.25) {
             move(0, -1, 0);
 
         }
         move(0, 0, 0);
+        sleep(1000);
+
     }
 }
