@@ -60,7 +60,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
     static final double MIN_POS     =  0.0;     // Minimum rotational position
-    double CLAW_POS = 0;
+    double CLAW_POS = 0.3;
     // Define class members
     public DcMotor leftFront   = null;
     public DcMotor rightFront   = null;
@@ -165,8 +165,8 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         lBelt.setPower(0);
         rBelt.setDirection(DcMotor.Direction.REVERSE);
         rBelt.setPower(0);
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
+        leftClose.setPosition(0.5 + CLAW_POS);
+        rightClose.setPosition(0.5 - CLAW_POS);
         // Wait for the start button0
 
 
@@ -196,7 +196,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
             lBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
             rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
 
-            if (gamepad1.right_bumper) {
+            if (gamepad1.right_bumper || gamepad1.left_bumper) {
                 CLAW_POS = 0.3;
             }
             if (gamepad1.left_bumper) {

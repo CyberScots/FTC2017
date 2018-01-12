@@ -187,16 +187,13 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-
-
         relicTrackables.activate();
-
 /*
         if (sensorColor.red() > sensorColor.blue()) {
         } else if (sensorColor.red() < sensorColor.blue()) {
         }*/
         runtime.reset();
-        while (cypher == "none" && runtime.seconds() < 5) {
+        while (cypher.equals("none")  && runtime.seconds() < 5) {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 if (vuMark == RelicRecoveryVuMark.LEFT) {
@@ -240,7 +237,12 @@ public class AutoRagbotRedAudience extends LinearOpMode {
                 telemetry.update();
             }
         }
-
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .5)) {
+            move(0,0,-0.5);
+            telemetry.addLine("Turning Left");
+            telemetry.update();
+        }
 
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
@@ -254,7 +256,6 @@ public class AutoRagbotRedAudience extends LinearOpMode {
             telemetry.addLine("Moving Forward");
             telemetry.update();
         }
-
 
         leftClose.setPosition(0.2);
         rightClose.setPosition(0.8);

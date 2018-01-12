@@ -65,9 +65,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="JackJewelWhackerRed", group ="Concept")
+@Autonomous(name="Jewel Whip Red", group ="Concept")
 //@Disabled
-public class JackJewelWhackerRed extends LinearOpMode {
+public class JewelRedTest extends LinearOpMode {
     ColorSensor colorSensor;    // Hardware Device Object
     public static final Double downArm = 0.0;
     public static final Double upArm = 1.0;
@@ -178,7 +178,7 @@ public class JackJewelWhackerRed extends LinearOpMode {
         waitForStart();
         telemetry.addLine("starting");
         telemetry.update();
-        WhackOp();
+        whip();
        /* runtime.reset();
         relicTrackables.activate();
         //GET GLYPH INTO CRYPTO-BOX
@@ -216,7 +216,7 @@ public class JackJewelWhackerRed extends LinearOpMode {
             move(0, -.2, 0);
         }*/
     }
-    void WhackOp() {
+    void whip() {
         runtime.reset();
         //move the servo down ye bag 'O' wires
         servoArm.setPosition (downArm);
@@ -226,37 +226,43 @@ public class JackJewelWhackerRed extends LinearOpMode {
         telemetry.addLine()
                 .addData("Red", colorSensor.red())
                 .addData("Blue", colorSensor.blue());
+        telemetry.update();
         //whack away opposing jewel
-        if (colorSensor.red() > 2 || colorSensor.blue() > 2) {
-            if (colorSensor.red() > colorSensor.blue()) {
-                WhacksOnBackwards();
+        if (colorSensor.red() > colorSensor.blue()) {
+            telemetry.addLine("Red Jewel, going forward");
+            telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, .5, 0);
             }
-            if (colorSensor.red() < colorSensor.blue()) {
-                WhacksOnForward();
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
             }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, -.5, 0);
+            }
+            move(0, 0, 0);
+        }else {
+            telemetry.addLine("Blue Jewel, going back");
+            telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, -.5, 0);
+            }
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, .5, 0);
+            }
+            move(0, 0, 0);
         }
-        //party
-        runtime.reset();
-        while (opModeIsActive() && runtime.seconds() < 2) {
-            servoArm.setPosition (upArm);
-        }
-    }
-    void WhacksOnForward(){
-        runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < 0.25) {
-            move(0, 1, 0);
-
-        }
-        move(0, 0, 0);
-    }
-    void WhacksOnBackwards(){
-        runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < 0.25) {
-            move(0, -1, 0);
-
-        }
-        move(0, 0, 0);
-        sleep(1000);
 
     }
 }
