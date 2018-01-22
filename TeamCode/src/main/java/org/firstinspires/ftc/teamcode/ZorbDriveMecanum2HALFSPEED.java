@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -53,9 +54,9 @@ import com.qualcomm.robotcore.util.Range;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@TeleOp(name = "[MECANUM] RagBot ZorbDrive", group = "Cyber Scots")
-//@Disabled
-public class ZorbDriveMecanum2 extends LinearOpMode {
+@TeleOp(name = "[MECANUM] RagBot ZorbDrive (1/2 Speed)", group = "Cyber Scots")
+@Disabled
+public class ZorbDriveMecanum2HALFSPEED extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to slow servo each CYCLE_MS cycle
     static final int    CYCLE_MS    =   25;     // period of each cycle
     static final double MAX_POS     =  1.0;     // Maximum rotational position
@@ -70,18 +71,16 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
-    public Servo servoArm = null;
     double  motorFL = 0;
     double motorFR = 0;
     double  motorBL = 0;
     double motorBR = 0;
-    double exponent = 7;
+    double exponent = 3;
     double joystickForward = 0;
     double joystickTurn = 0;
     double joystickSide = 0;
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
-
     private ElapsedTime runtime = new ElapsedTime();
 
     public static double getAngle(double x, double y)
@@ -105,7 +104,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-        mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
+        mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2))/2, turn);
 
         telemetry.addData("motorFR", motorFR);
         telemetry.addData("motorBL", motorBL);
@@ -159,7 +158,6 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
-        servoArm  = hardwareMap.get(Servo.class, "servoArm");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -174,9 +172,12 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
 
 
         telemetry.addLine(":Press Start to use Zorb's awesome drive for the Ragbot" );
-        telemetry.addData(">", "╦═╗╔═╗╔═╗╔╗  ╔═╗╔╦╗" );
-        telemetry.addData(">", "╠╦╝╠═╣║  ╦╠╩╗║  ║  ║" );
-        telemetry.addData(">", "╩╚═╩  ╩╚═╝╚═╝╚═╝ ╩" );
+        telemetry.addLine("    ____               __          __ " );
+        telemetry.addLine("   / __ \\____ _____ _/ /_  ____  / /_" );
+        telemetry.addLine("  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
+        telemetry.addLine(" / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
+        telemetry.addLine("/_/ |_|\\__,_/\\__, /_.___/\\____/\\__/  " );
+        telemetry.addLine("            /____/                   " );
         telemetry.update();
         waitForStart();
 
@@ -197,16 +198,10 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
             rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
 
             if (gamepad1.right_bumper) {
-                CLAW_POS = 0.5;
+                CLAW_POS = 0.3;
             }
             if (gamepad1.left_bumper) {
                 CLAW_POS = 0;
-            }
-            if (gamepad1.dpad_up) {
-                runtime.reset();
-                while (opModeIsActive() && runtime.seconds() < 2) {
-                    servoArm.setPosition (1);
-                }
             }
 
             //CLAW_POS += Math.pow((gamepad1.right_trigger - gamepad1.left_trigger),5);

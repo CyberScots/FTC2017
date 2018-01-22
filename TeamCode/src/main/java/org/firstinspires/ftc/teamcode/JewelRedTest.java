@@ -220,7 +220,7 @@ public class JewelRedTest extends LinearOpMode {
         runtime.reset();
         //move the servo down ye bag 'O' wires
         servoArm.setPosition (downArm);
-        sleep(1000);
+        sleep(3000);
         //identify jewel in front of arm
         colorSensor.enableLed(true);
         telemetry.addLine()
@@ -233,7 +233,7 @@ public class JewelRedTest extends LinearOpMode {
             telemetry.update();
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, .5, 0);
+                move(0, 0, .5);
             }
             move(0, 0, 0);
             runtime.reset();
@@ -242,7 +242,7 @@ public class JewelRedTest extends LinearOpMode {
             }
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, -.5, 0);
+                move(0, 0, -.5);
             }
             move(0, 0, 0);
         }else {
@@ -250,7 +250,7 @@ public class JewelRedTest extends LinearOpMode {
             telemetry.update();
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, -.5, 0);
+                move(0, 0, -.5);
             }
             move(0, 0, 0);
             runtime.reset();
@@ -259,7 +259,7 @@ public class JewelRedTest extends LinearOpMode {
             }
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, .5, 0);
+                move(0, 0, .5);
             }
             move(0, 0, 0);
         }

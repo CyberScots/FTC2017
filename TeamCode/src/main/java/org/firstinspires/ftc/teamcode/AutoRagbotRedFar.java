@@ -30,18 +30,27 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -80,6 +89,8 @@ public class AutoRagbotRedFar extends LinearOpMode {
     double motorFR = 0;
     double  motorBL = 0;
     double motorBR = 0;
+    double sidewaysDistance = 2.4;
+    String cypher = "none";
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
@@ -106,7 +117,6 @@ public class AutoRagbotRedFar extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
-        turn -= x;
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
@@ -166,63 +176,39 @@ public class AutoRagbotRedFar extends LinearOpMode {
         rightClose.setPosition(0.5);
         // Wait for the start button0
 
-
         telemetry.addData(">", "Press Start to use Zorb's awesome VuForia for the Ragbot" );
-        telemetry.addData(">", "    ____               __          __ " );
-        telemetry.addData(">", "   / __ \\____ _____ _/ /_  ____  / /_" );
-        telemetry.addData(">", "  / /_/ / __ `/ __ `/ __ \\/ __ \\/ __/" );
-        telemetry.addData(">", " / _, _/ /_/ / /_/ / /_/ / /_/ / /_  " );
-        telemetry.addData(">", "/_/ |_|\\__,_/\\__, /_.___/\\____/\\__/  " );
-        telemetry.addData(">", "            /____/                   " );
+        telemetry.addData(">", "╦═╗╔═╗╔═╗╔╗  ╔═╗╔╦╗" );
+        telemetry.addData(">", "╠╦╝╠═╣║  ╦╠╩╗║  ║  ║" );
+        telemetry.addData(">", "╩╚═╩  ╩╚═╝╚═╝╚═╝ ╩" );
         telemetry.update();
         waitForStart();
 
-        runtime.reset();
-
         relicTrackables.activate();
-
 /*
         if (sensorColor.red() > sensorColor.blue()) {
         } else if (sensorColor.red() < sensorColor.blue()) {
         }*/
-
-
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1)) {
-            move(-1,0,0);
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.4)) {
-            move(0,1,0);
-        }
-
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.3)) {
-            move(0,-0.5,0);
-        }
-move(0,0,0);
-/*
-        runtime.reset();
-
-        while (opModeIsActive() && (runtime.seconds() < 2)) {
-            move(0.5,1.5,0);
-        }
-        move(0,0,0);*/
-            /*RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+        while (cypher.equals("none")  && runtime.seconds() < 5) {
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
             if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                 if (vuMark == RelicRecoveryVuMark.LEFT) {
                     telemetry.addData("VuMark Detected: ", "Left");
-                    move(-1,0,0);
+                    telemetry.update();
+                    cypher = "left";
+                    sidewaysDistance = .8;
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
-                    move(0,1,0);
+                    telemetry.update();
+                    cypher = "center";
+                    sidewaysDistance = .6;
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
-                    move(1,0,0);
+                    telemetry.update();
+                    cypher = "right";
+                    sidewaysDistance = .4;
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -244,17 +230,44 @@ move(0,0,0);
             }
             else {
                 telemetry.addData("VuMark", "Not found ):");
-                move(0,0,0);
-            }*/
+                telemetry.update();
+            }
+        }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.2)) {
+            move(0,0,-0.5);
+            telemetry.addLine("Turning Left");
+            telemetry.update();
+        }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
+            move(-.5,0,0);
+            telemetry.addLine("Moving Left");
+            telemetry.update();
+        }
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+            move(0,.5,0);
+            telemetry.addLine("Moving Forward");
+            telemetry.update();
+        }
 
+        leftClose.setPosition(0.2);
+        rightClose.setPosition(0.8);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
+            move(0,-0.5,0);
+            telemetry.addLine("Moving Back");
+            telemetry.update();
+        }
+        move(0,0,0);
 
             /*telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());*/
 
-
-            telemetry.update();
-        }
+        telemetry.update();
+    }
 
 
     String format(OpenGLMatrix transformationMatrix) {

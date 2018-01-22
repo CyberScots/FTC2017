@@ -30,27 +30,18 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 /**
  * This OpMode illustrates the basics of using the Vuforia engine to determine
@@ -71,28 +62,28 @@ import com.qualcomm.robotcore.util.Range;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Red Audience Ragbot", group ="Concept")
+@Autonomous(name="Jewel Whip Blue", group ="Concept")
 //@Disabled
-public class AutoRagbotRedAudience extends LinearOpMode {
-
+public class JewelBlueTest extends LinearOpMode {
+    ColorSensor colorSensor;    // Hardware Device Object
+    public static final Double downArm = 0.0;
+    public static final Double upArm = 1.0;
     public static final String TAG = "Vuforia VuMark Sample";
-    public DcMotor leftFront   = null;
-    public DcMotor rightFront   = null;
-    public DcMotor leftBack   = null;
-    public DcMotor rightBack   = null;
-    public DcMotor lBelt   = null;
-    public DcMotor rBelt   = null;
-    public Servo leftClose   = null;
-    public Servo rightClose   = null;
-    ColorSensor sensorColor;
-    double  motorFL = 0;
+    public DcMotor leftFront = null;
+    public DcMotor rightFront = null;
+    public DcMotor leftBack = null;
+    public DcMotor rightBack = null;
+    public DcMotor lBelt = null;
+    public DcMotor rBelt = null;
+    public Servo leftClose = null;
+    public Servo rightClose = null;
+    public Servo servoArm = null;
+    double motorFL = 0;
     double motorFR = 0;
-    double  motorBL = 0;
+    double motorBL = 0;
     double motorBR = 0;
-    double sidewaysDistance = 2.4;
-    String cypher = "none";
-    static final double     FORWARD_SPEED = 1;
-    static final double     TURN_SPEED    = 0.5;
+    static final double FORWARD_SPEED = 1;
+    static final double TURN_SPEED = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
@@ -117,6 +108,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         telemetry.addData("x axis movement", x);
         telemetry.addData("y axis movement", y);
         telemetry.addData("Turning", turn);
+
         mecanum(getAngle(x,y), Math.sqrt(Math.pow(x, 2) + Math.pow(y ,2)), turn);
 
         telemetry.addData("motorFR", motorFR);
@@ -131,7 +123,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
     }
 
     @Override public void runOpMode() {
-
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
@@ -150,6 +142,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code onthe next line, between the double quotes.
          */
+
         parameters.vuforiaLicenseKey = "AcRNMjL/////AAAAGYx9swjI4EM3gOz2yIkuui5Eo0LMsIsAxmD+X+Lz2Eox41tmaut+zNhNGm68NGyXSnmYIwcWSIVz/fOZf+ht++8XJScyjQv/BDbKKOOEZ3//KzhxFkS93SlQ3OKX+KhDdtv/USecJsSYAMY/A77pOHu10H6SXHGC2fTuCa1+mzp6rEpugFFC0JxcTJSyFTx3IMvH4BPU98zZbTbb8bnVl1usz84xusFUTKGua19+lvZ1gBwfe/SltwgQZEmzTrQPT7K8cnu0obpmxspet8k5FHbqeJvzXV9PMK1wd2+wYygYQMeJCOrg/ZIE/fRODW4sgDIt6L85XMehoidJ3aE2csreAsiSaQsFgnYe4H07XwDi";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
@@ -164,6 +157,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
+        servoArm  = hardwareMap.get(Servo.class, "servoArm");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -176,101 +170,96 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         rightClose.setPosition(0.5);
         // Wait for the start button0
 
-        telemetry.addData(">", "Press Start to use Zorb's awesome VuForia for the Ragbot" );
-        telemetry.addData(">", "╦═╗╔═╗╔═╗╔╗  ╔═╗╔╦╗" );
-        telemetry.addData(">", "╠╦╝╠═╣║  ╦╠╩╗║  ║  ║" );
-        telemetry.addData(">", "╩╚═╩  ╩╚═╝╚═╝╚═╝ ╩" );
+        telemetry.addData(">", "Press Start" );
         telemetry.update();
         waitForStart();
-
+        telemetry.addLine("starting");
+        telemetry.update();
+        whip();
+       /* runtime.reset();
         relicTrackables.activate();
-/*
-        if (sensorColor.red() > sensorColor.blue()) {
-        } else if (sensorColor.red() < sensorColor.blue()) {
-        }*/
-        runtime.reset();
-        while (cypher.equals("none")  && runtime.seconds() < 5) {
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
-            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
-                if (vuMark == RelicRecoveryVuMark.LEFT) {
-                    telemetry.addData("VuMark Detected: ", "Left");
-                    telemetry.update();
-                    cypher = "left";
-                    sidewaysDistance = 3.6;
-                }
-                if (vuMark == RelicRecoveryVuMark.CENTER) {
-                    telemetry.addData("VuMark Detected: ", "Center");
-                    telemetry.update();
-                    cypher = "center";
-                    sidewaysDistance = 3.2;
-                }
-                if (vuMark == RelicRecoveryVuMark.RIGHT) {
-                    telemetry.addData("VuMark Detected: ", "Right");
-                    telemetry.update();
-                    cypher = "right";
-                    sidewaysDistance = 2.8;
-                }
-                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-                telemetry.addData("Pose", format(pose));
+        //GET GLYPH INTO CRYPTO-BOX
 
-                if (pose != null) {
-                    VectorF trans = pose.getTranslation();
-                    Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+        for (int loop = 0; loop < 5; loop++)
+            runtime.reset();
 
-                    // Extract the X, Y, and Z components of the offset of the target relative to the robot
-                    double tX = trans.get(0);
-                    double tY = trans.get(1);
-                    double tZ = trans.get(2);
-
-                    // Extract the rotational components of the target relative to the robot
-                    double rX = rot.firstAngle;
-                    double rY = rot.secondAngle;
-                    double rZ = rot.thirdAngle;
-                }
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            move(0, 1, .1);
+        }
+        {
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < 1)) {
+                move(0, 1, .1);
             }
-            else {
-                telemetry.addData("VuMark", "Not found ):");
-                telemetry.update();
+            move(0,0,0);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .1)) {
+                    move(0,-.5,.1);
             }
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .6)) {
-            move(0,0,-0.5);
-            telemetry.addLine("Turning Left");
-            telemetry.update();
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
-            move(-.5,0,0);
-            telemetry.addLine("Moving Left");
-            telemetry.update();
-        }
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            move(0,.5,0);
-            telemetry.addLine("Moving Forward");
-            telemetry.update();
-        }
 
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
-            move(0,-0.5,0);
-            telemetry.addLine("Moving Back");
-            telemetry.update();
         }
         move(0,0,0);
-
-            /*telemetry.addData("Red  ", sensorColor.red());
-            telemetry.addData("Green", sensorColor.green());
-            telemetry.addData("Blue ", sensorColor.blue());*/
-
+        //open CLAW
+        leftClose.setPosition(0.8);
+        rightClose.setPosition(0.2);
+        //PUSH GLYPH IN
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 1)) {
+            move(0, .1, 0);
+        }
+        //BACK OFF
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .5)) {
+            move(0, -.2, 0);
+        }*/
+    }
+    void whip() {
+        runtime.reset();
+        //move the servo down ye bag 'O' wires
+        servoArm.setPosition (downArm);
+        sleep(3000);
+        //identify jewel in front of arm
+        colorSensor.enableLed(true);
+        telemetry.addLine()
+                .addData("Red", colorSensor.red())
+                .addData("Blue", colorSensor.blue());
+        telemetry.update();
+        //whack away opposing jewel
+        if (colorSensor.red() < colorSensor.blue()) {
+            telemetry.addLine("Blue Jewel, going forward");
             telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, .5, 0);
+            }
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, -.5, 0);
+            }
+            move(0, 0, 0);
+        }else {
+            telemetry.addLine("Red Jewel, going back");
+            telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, -.5, 0);
+            }
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, .5, 0);
+            }
+            move(0, 0, 0);
         }
 
-
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 }
