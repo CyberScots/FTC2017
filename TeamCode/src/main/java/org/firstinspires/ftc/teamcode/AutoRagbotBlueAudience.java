@@ -84,6 +84,8 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
+    public static final Double downArm = 1.0;
+    public static final Double upArm = 0.0;
     ColorSensor colorSensor;
     double  motorFL = 0;
     double motorFR = 0;
@@ -91,6 +93,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
     double motorBR = 0;
     double sidewaysDistance = 2.4;
     String cypher = "none";
+    public Servo servoArm = null;
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
     private ElapsedTime runtime = new ElapsedTime();
@@ -130,6 +133,57 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         rightBack.setPower(motorBR);
     }
 
+    void whip() {
+        runtime.reset();
+        //move the servo down ye bag 'O' wires
+        servoArm.setPosition (downArm);
+        sleep(3000);
+        //identify jewel in front of arm
+        colorSensor.enableLed(true);
+        telemetry.addLine()
+                .addData("Red", colorSensor.red())
+                .addData("Blue", colorSensor.blue());
+        telemetry.update();
+        //whack away opposing jewel
+        if (colorSensor.red() > colorSensor.blue()) {
+            telemetry.addLine("Red Jewel, going forward");
+            telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, 0, .5);
+            }
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.25) {
+                move(0, 0, -.5);
+            }
+            move(0, 0, 0);
+        }else {
+            telemetry.addLine("Blue Jewel, going back");
+            telemetry.update();
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
+                move(0, 0, -.5);
+            }
+            move(0, 0, 0);
+            runtime.reset();
+            while (opModeIsActive() && runtime.seconds() < 2) {
+                servoArm.setPosition (upArm);
+            }
+            runtime.reset();
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
+                move(0, 0, .5);
+            }
+            move(0, 0, 0);
+        }
+        colorSensor.enableLed(false);
+
+    }
+
     @Override public void runOpMode() {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -164,6 +218,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         rBelt  = hardwareMap.get(DcMotor.class, "right_belt");
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
+        servoArm  = hardwareMap.get(Servo.class, "servoArm");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -188,6 +243,8 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         if (sensorColor.red() > sensorColor.blue()) {
         } else if (sensorColor.red() < sensorColor.blue()) {
         }*/
+
+        whip();
         runtime.reset();
         while (cypher.equals("none")  && runtime.seconds() < 5) {
             RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
