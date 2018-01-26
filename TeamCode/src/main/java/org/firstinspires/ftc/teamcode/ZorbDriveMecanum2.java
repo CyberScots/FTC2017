@@ -205,7 +205,7 @@ public class ZorbDriveMecanum2 extends LinearOpMode {
             if (gamepad1.dpad_up) {
                 runtime.reset();
                 while (opModeIsActive() && runtime.seconds() < 2) {
-                    servoArm.setPosition (1);
+                    servoArm.setPosition (0);
                 }
             }
 

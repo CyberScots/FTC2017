@@ -214,7 +214,7 @@ public class ZorbDriveMecanum2Relic extends LinearOpMode {
             if (gamepad1.x) {
                 runtime.reset();
                 while (opModeIsActive() && runtime.seconds() < 2) {
-                    servoArm.setPosition (1);
+                    servoArm.setPosition (0);
                 }
             }
 
