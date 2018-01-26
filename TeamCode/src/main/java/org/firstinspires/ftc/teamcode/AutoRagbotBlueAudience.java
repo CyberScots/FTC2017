@@ -86,6 +86,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
     public Servo rightClose   = null;
     public static final Double downArm = 1.0;
     public static final Double upArm = 0.0;
+    String jewel = "none";
     ColorSensor colorSensor;
     double  motorFL = 0;
     double motorFR = 0;
@@ -148,6 +149,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         if (colorSensor.red() > colorSensor.blue()) {
             telemetry.addLine("Red Jewel, going forward");
             telemetry.update();
+            jewel = "red";
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
                 move(0, 0, .5);
@@ -165,6 +167,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         }else {
             telemetry.addLine("Blue Jewel, going back");
             telemetry.update();
+            jewel = "blue";
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.1) {
                 move(0, 0, -.5);
@@ -180,7 +183,6 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
             }
             move(0, 0, 0);
         }
-        colorSensor.enableLed(false);
 
     }
 
@@ -219,6 +221,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
         servoArm  = hardwareMap.get(Servo.class, "servoArm");
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
@@ -259,13 +262,13 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
                     telemetry.addData("VuMark Detected: ", "Center");
                     telemetry.update();
                     cypher = "center";
-                    sidewaysDistance = 1.95;
+                    sidewaysDistance = 1.75;
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
                     telemetry.update();
                     cypher = "right";
-                    sidewaysDistance = 2.4;
+                    sidewaysDistance = 2.0;
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -324,7 +327,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
             /*telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());*/
-
+        telemetry.addLine("Saw " + jewel + " jewel");
         telemetry.update();
     }
 

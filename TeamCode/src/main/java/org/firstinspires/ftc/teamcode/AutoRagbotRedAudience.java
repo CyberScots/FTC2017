@@ -180,8 +180,6 @@ public class AutoRagbotRedAudience extends LinearOpMode {
             }
             move(0, 0, 0);
         }
-        colorSensor.enableLed(false);
-
     }
 
     @Override public void runOpMode() {
@@ -219,6 +217,7 @@ public class AutoRagbotRedAudience extends LinearOpMode {
         rightClose  = hardwareMap.get(Servo.class, "right_close");
         leftClose  = hardwareMap.get(Servo.class, "left_close");
         servoArm  = hardwareMap.get(Servo.class, "servoArm");
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);
         leftBack.setDirection(DcMotor.Direction.REVERSE);
