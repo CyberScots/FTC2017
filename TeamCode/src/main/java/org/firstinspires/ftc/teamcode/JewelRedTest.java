@@ -216,6 +216,7 @@ public class JewelRedTest extends LinearOpMode {
             move(0, -.2, 0);
         }*/
     }
+
     void whip() {
         runtime.reset();
         //move the servo down ye bag 'O' wires
