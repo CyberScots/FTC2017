@@ -256,19 +256,19 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
                     telemetry.addData("VuMark Detected: ", "Left");
                     telemetry.update();
                     cypher = "left";
-                    sidewaysDistance = 1.5;
+                    sidewaysDistance = 1.5; //worked before, but on lower charge
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
                     telemetry.update();
                     cypher = "center";
-                    sidewaysDistance = 1.75;
+                    sidewaysDistance = 1.8; //exatly in between
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
                     telemetry.update();
                     cypher = "right";
-                    sidewaysDistance = 2.0;
+                    sidewaysDistance = 2.2; //maybe a bit too much??
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
