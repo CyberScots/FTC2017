@@ -191,8 +191,8 @@ public class ZorbDriveN0 extends LinearOpMode {
             //    joystickTurn = 0;
             }
 
-            lBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
-            rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/3);
+            lBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/7);
+            rBelt.setPower(Math.pow(gamepad1.left_trigger - gamepad1.right_trigger, 5)/7);
 
             if (gamepad1.right_bumper) {
                 CLAW_POS = 0.5;

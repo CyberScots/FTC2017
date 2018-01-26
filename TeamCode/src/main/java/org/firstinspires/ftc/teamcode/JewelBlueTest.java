@@ -32,7 +32,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.SwitchableLight;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.ConceptVuforiaNavigation;
@@ -66,8 +69,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //@Disabled
 public class JewelBlueTest extends LinearOpMode {
     ColorSensor colorSensor;    // Hardware Device Object
-    public static final Double downArm = 0.0;
-    public static final Double upArm = 1.0;
+    public static final Double downArm = 1.0;
+    public static final Double upArm = 0.0;
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
@@ -169,7 +172,7 @@ public class JewelBlueTest extends LinearOpMode {
         leftClose.setPosition(0.5);
         rightClose.setPosition(0.5);
         // Wait for the start button0
-
+        colorSensor.enableLed(false);
         telemetry.addData(">", "Press Start" );
         telemetry.update();
         waitForStart();
@@ -225,12 +228,12 @@ public class JewelBlueTest extends LinearOpMode {
                 .addData("Blue", colorSensor.blue());
         telemetry.update();
         //whack away opposing jewel
-        if (colorSensor.red() < colorSensor.blue()) {
-            telemetry.addLine("Blue Jewel, going forward");
+        if (colorSensor.red() > colorSensor.blue()) {
+            telemetry.addLine("Red Jewel, going forward");
             telemetry.update();
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, .5, 0);
+                move(0, 0, .5);
             }
             move(0, 0, 0);
             runtime.reset();
@@ -239,15 +242,15 @@ public class JewelBlueTest extends LinearOpMode {
             }
             runtime.reset();
             while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, -.5, 0);
+                move(0, 0, -.5);
             }
             move(0, 0, 0);
         }else {
-            telemetry.addLine("Red Jewel, going back");
+            telemetry.addLine("Blue Jewel, going back");
             telemetry.update();
             runtime.reset();
-            while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, -.5, 0);
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
+                move(0, 0, -.5);
             }
             move(0, 0, 0);
             runtime.reset();
@@ -255,11 +258,12 @@ public class JewelBlueTest extends LinearOpMode {
                 servoArm.setPosition (upArm);
             }
             runtime.reset();
-            while(opModeIsActive() && runtime.seconds() < 0.25) {
-                move(0, .5, 0);
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
+                move(0, 0, .5);
             }
             move(0, 0, 0);
         }
+        colorSensor.enableLed(false);
 
     }
 }

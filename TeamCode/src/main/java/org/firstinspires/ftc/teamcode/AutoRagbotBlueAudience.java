@@ -84,7 +84,7 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
     public DcMotor rBelt   = null;
     public Servo leftClose   = null;
     public Servo rightClose   = null;
-    ColorSensor sensorColor;
+    ColorSensor colorSensor;
     double  motorFL = 0;
     double motorFR = 0;
     double  motorBL = 0;
@@ -93,7 +93,6 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
     String cypher = "none";
     static final double     FORWARD_SPEED = 1;
     static final double     TURN_SPEED    = 0.5;
-
     private ElapsedTime runtime = new ElapsedTime();
 
     OpenGLMatrix lastLocation = null;
@@ -197,19 +196,19 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
                     telemetry.addData("VuMark Detected: ", "Left");
                     telemetry.update();
                     cypher = "left";
-                    sidewaysDistance = 3.6;
+                    sidewaysDistance = 1.5;
                 }
                 if (vuMark == RelicRecoveryVuMark.CENTER) {
                     telemetry.addData("VuMark Detected: ", "Center");
                     telemetry.update();
                     cypher = "center";
-                    sidewaysDistance = 3.2;
+                    sidewaysDistance = 1.95;
                 }
                 if (vuMark == RelicRecoveryVuMark.RIGHT) {
                     telemetry.addData("VuMark Detected: ", "Right");
                     telemetry.update();
                     cypher = "right";
-                    sidewaysDistance = 2.8;
+                    sidewaysDistance = 2.4;
                 }
                 OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
                 telemetry.addData("Pose", format(pose));
@@ -234,16 +233,17 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
                 telemetry.update();
             }
         }
+
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .6)) {
-            move(0,0,0.5);
-            telemetry.addLine("Turning right");
+        while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
+            move(0,0.5,0);
+            telemetry.addLine("Moving Forward");
             telemetry.update();
         }
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
-            move(.5,0,0);
-            telemetry.addLine("Moving Left");
+        while (opModeIsActive() && (runtime.seconds() < .8)) {
+            move(0,0, -0.5);
+            telemetry.addLine("Turning Left");
             telemetry.update();
         }
         runtime.reset();
@@ -252,11 +252,12 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
             telemetry.addLine("Moving Forward");
             telemetry.update();
         }
-
-        leftClose.setPosition(0.2);
-        rightClose.setPosition(0.8);
+        move(0,0,0);
+        leftClose.setPosition(0.8);
+        rightClose.setPosition(0.2);
+        sleep(1000);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
+        while (opModeIsActive() && (runtime.seconds() < 0.1)) {
             move(0,-0.5,0);
             telemetry.addLine("Moving Back");
             telemetry.update();
@@ -269,7 +270,6 @@ public class AutoRagbotBlueAudience extends LinearOpMode {
 
         telemetry.update();
     }
-
 
     String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";

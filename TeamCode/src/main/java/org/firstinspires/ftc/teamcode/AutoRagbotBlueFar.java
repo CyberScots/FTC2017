@@ -71,7 +71,7 @@ import com.qualcomm.robotcore.util.Range;
  * is explained in {@link ConceptVuforiaNavigation}.
  */
 
-@Autonomous(name="Red Far Ragbot", group ="Concept")
+@Autonomous(name="Blue Far Ragbot", group ="Concept")
 //@Disabled
 public class AutoRagbotBlueFar extends LinearOpMode {
 

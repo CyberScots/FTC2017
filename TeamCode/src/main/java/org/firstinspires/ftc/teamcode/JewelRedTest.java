@@ -69,8 +69,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 //@Disabled
 public class JewelRedTest extends LinearOpMode {
     ColorSensor colorSensor;    // Hardware Device Object
-    public static final Double downArm = 0.0;
-    public static final Double upArm = 1.0;
+    public static final Double downArm = 1.0;
+    public static final Double upArm = 0.0;
     public static final String TAG = "Vuforia VuMark Sample";
     public DcMotor leftFront = null;
     public DcMotor rightFront = null;
@@ -172,7 +172,7 @@ public class JewelRedTest extends LinearOpMode {
         leftClose.setPosition(0.5);
         rightClose.setPosition(0.5);
         // Wait for the start button0
-
+        colorSensor.enableLed(false);
         telemetry.addData(">", "Press Start" );
         telemetry.update();
         waitForStart();
@@ -228,7 +228,7 @@ public class JewelRedTest extends LinearOpMode {
                 .addData("Blue", colorSensor.blue());
         telemetry.update();
         //whack away opposing jewel
-        if (colorSensor.red() > colorSensor.blue()) {
+        if (colorSensor.red() < colorSensor.blue()) {
             telemetry.addLine("Red Jewel, going forward");
             telemetry.update();
             runtime.reset();
@@ -249,7 +249,7 @@ public class JewelRedTest extends LinearOpMode {
             telemetry.addLine("Blue Jewel, going back");
             telemetry.update();
             runtime.reset();
-            while(opModeIsActive() && runtime.seconds() < 0.25) {
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
                 move(0, 0, -.5);
             }
             move(0, 0, 0);
@@ -258,11 +258,12 @@ public class JewelRedTest extends LinearOpMode {
                 servoArm.setPosition (upArm);
             }
             runtime.reset();
-            while(opModeIsActive() && runtime.seconds() < 0.25) {
+            while(opModeIsActive() && runtime.seconds() < 0.1) {
                 move(0, 0, .5);
             }
             move(0, 0, 0);
         }
+        colorSensor.enableLed(false);
 
     }
 }
