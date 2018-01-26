@@ -240,13 +240,19 @@ public class AutoRagbotRedFar extends LinearOpMode {
             telemetry.update();
         }
         runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .6)) {
+            move(0,.5,0);
+            telemetry.addLine("Moving Forward");
+            telemetry.update();
+        }
+        runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < sidewaysDistance)) {
             move(-.5,0,0);
             telemetry.addLine("Moving Left");
             telemetry.update();
         }
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+        while (opModeIsActive() && (runtime.seconds() < .6)) {
             move(0,.5,0);
             telemetry.addLine("Moving Forward");
             telemetry.update();
